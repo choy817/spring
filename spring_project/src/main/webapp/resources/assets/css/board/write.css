@@ -1,0 +1,59 @@
+@charset "UTF-8";
+.write_wrap{
+	width: 100%;
+	/* background-color: pink;  */
+	margin: auto;
+}
+.form_wrap{
+	margin: auto;
+	width: 70%;
+	/* background-color: yellow;  */
+}
+.write{
+	margin: auto;
+	width: 50%;
+	/* background: black; */
+}
+.writeText{
+	margin: auto;
+	width: 70%;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 24px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+ 	/* background-color: yellow;  */
+}
+.form-control{
+	border-radius: 0;
+}
+div.button{
+   margin: auto;
+   width: 168px;
+}
+div.button input{
+   padding: 5px;
+   width: 100%;
+   font-size: 18px;
+}
+.btn{
+	margin-top: 20px;
+	text-align: center;
+    line-height: 26px;
+    border: none 0;
+    color: #fff;
+    width: 80px;
+    font-size: 15px;
+    background: #476fad;
+    border-radius: 0;
+}
+.menuSearch input {
+    position: relative;
+    top: -2px;
+    padding: 0 15px;
+    margin-left: 50px;
+    background: #ebebeb;
+    border-radius: 30px !important;
+    border: none !important;
+    height: 34px;
+    width: 240px;
+}
