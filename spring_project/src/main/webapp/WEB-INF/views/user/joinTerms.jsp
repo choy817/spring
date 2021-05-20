@@ -104,9 +104,6 @@
   		</table>
 	</div>
 
-    
-
-
     <!-- Start Footer -->
   <footer>
 	<div class="footerContents">
@@ -131,15 +128,13 @@
     </div>
    </footer> 
     <!-- End Footer -->
-
-
+</body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
-    <script src="/assets/js/custom.js"></script>
-
-</body>
-
+    <script src="/assets/js/user/joinTerms.js"></script>
+    <script> var contextPath = "${pageContext.request.contextPath}";</script>
 </html>

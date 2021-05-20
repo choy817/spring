@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
+<mapper namespace="com.koreait.mapper.UserMapper">
+	<insert id="userJoin">
+		INSERT INTO tbl_user (userNo,userId, userName,userPw,userPwCheck,userEmail,sendNumber,
+		userPhone,userPostcode,userAddr,userDetailAddr,userEtcAddr)
+		VALUES((select * from (select max(userNo)+1 from tbl_user) as v),
+		#{userId},#{userName},#{userPw},#{userPwCheck},#{userEmail},#{sendNumber},#{userPhone},
+		#{userPostcode},#{userAddr},#{userDetailAddr},#{userEtcAddr});
+	</insert>
+		
+</mapper>

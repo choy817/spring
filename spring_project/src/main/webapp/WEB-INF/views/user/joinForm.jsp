@@ -67,6 +67,7 @@
         <div class="form_txtInput">
           <h2 class="sub_tit_txt">회원가입</h2>
           <p class="exTxt">회원가입시 이메일 인증을 반드시 진행하셔야 합니다.</p>
+      	<form class="joinForm" name="joinForm" method="post">
           <div class="join_form">
             <table>
               <colgroup>
@@ -76,46 +77,59 @@
               <tbody>
                 <tr>
                   <th><span>아이디</span></th>
-                  <td><input type="text" placeholder="ID 를 입력하세요."></td>
+                  <td><input type="text" name="userId" placeholder="ID 를 입력하세요.">
+                  <span id="checkId"></span>
+                  </td>
                 </tr>
                 <tr>
                   <th><span>이름</span></th>
-                  <td><input type="text" placeholder=""></td>
+                  <td><input type="text" name="userName" placeholder="">
+                  <span id="checkName"></span>
+                  </td>
                 </tr>
                 <tr>
                   <th><span>비밀번호</span></th>
-                  <td><input type="text" placeholder="비밀번호를 입력해주세요."></td>
+                  <td><input type="password" name="userPw" placeholder="비밀번호를 입력해주세요.">
+                  <span id="checkPw"></span>
+                  </td>
                 </tr>
                 <tr>
                   <th><span>비밀번호 확인</span></th>
-                  <td><input type="text" placeholder="비밀번호를 확인하세요"></td>
+                  <td><input type="password" name="userPwConfirm" placeholder="비밀번호를 확인하세요">
+                  <span id="checkpwConfirm"></span>
+                  </td>
                 </tr>
                 <tr class="email">
                   <th><span>이메일</span></th>
                   <td>
-                    <input type="text" class="email" placeholder=""><!-- <span class="mar10">@</span>
+                    <input type="text" name="userEmail" placeholder=""><!-- <span class="mar10">@</span>
                     <input type="text"  class="email email2" placeholder=""> -->
                     <a href="javascript:;" class="btn_confirm">인증번호 발송</a>
+                    <span id="checkEmail"></span>
                   </td>
                 </tr>
                 <tr>
                   <th><span>인증번호 확인</span></th>
-                  <td><input type="text" class="send_number" placeholder="10:00">
+                  <td><input type="text" name="sendNumber" placeholder="10:00">
                     <!-- <a href="javascript:;" class="btn_confirm">인증번호 발송</a> -->
+                    <span id="checkNumber"></span>
                   </td>
                 </tr>
                 <tr>
                   <th><span>휴대폰 번호</span></th>
-                  <td><input type="text" placeholder="휴대폰 번호를 입력하세요."></td>
+                  <td><input type="text" name="userPhone" placeholder="휴대폰 번호를 입력하세요.">
+                  <span id="checkPhone"></span>
+                  </td>
                 </tr>
                 <tr class="address">
                   <th><span>주소</span></th>
                   <td>
-					<input type="text" id="sample6_postcode" placeholder="우편번호">
+					<input type="text" name="userPostcode" id="sample6_postcode" placeholder="우편번호">
 					<input type="button" class="postcode_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-					<input type="text" id="sample6_address" placeholder="주소"><br>
-					<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-					<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+					<input type="text" name="userAddr" id="sample6_address" placeholder="주소"><br>
+					<input type="text" name="userDetailAddr" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="text" name="userEtcAddr" id="sample6_extraAddress" placeholder="참고항목">
+					<span id="checkAddr"></span>
 				  </td>
                 </tr>
               </tbody>
@@ -140,8 +154,13 @@
             </div>
           </div>
           <div class="btn_wrap">
-            <a href="javascript:;">다음</a><br>
+            <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="가입">
           </div>
+          <!-- <div class="button">
+	        <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="가입">
+	        <input type="button" class="btn btn-secondary" value="목록">
+	      </div> -->
+        </form>
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->
     </div> <!-- container E -->
@@ -170,8 +189,8 @@
     </div>
    </footer> 
     <!-- End Footer -->
-
-
+</body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
@@ -228,5 +247,5 @@
         }).open();
     }
 </script>
-</body>
+<script src="/assets/js/user/joinForm.js"></script>
 </html>
