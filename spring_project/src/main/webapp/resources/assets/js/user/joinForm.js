@@ -1,3 +1,17 @@
+//모든 공백 체크 정규식 
+var empJ = /\s/g; 
+//아이디 정규식 
+var idJ = /^[a-z0-9][a-z0-9_\-]{4,19}$/; 
+// 비밀번호 정규식 
+var pwJ = /^[A-Za-z0-9]{4,12}$/; 
+// 이름 정규식 
+var nameJ = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; 
+// 이메일 검사 정규식 
+var mailJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; 
+// 휴대폰 번호 정규식 
+var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
+
+
 function sendIt(){
 	const joinForm=document.joinForm;
 	
@@ -44,3 +58,25 @@ function sendIt(){
 	}
 	joinForm.submit();
 }
+
+function checkId(){
+	var userId = $('input[name=userId]').val();
+	$.ajax({
+		 type		:'post',
+		 contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	     url		:contextPath+'/user/CheckId?userId='+userId, 
+	     success	:function(data){
+	     console.log($.trim(data));
+	         if($.trim(data)==0){
+	             $('#checkText').html("사용 가능한 팀명입니다.");  
+	             $("#checkText").css("color", "#4CAF50");
+	         }else{
+	             $('#checkText').html("중복된 팀명입니다.");
+	             $("#checkText").css("color", "#f44336");
+	         }
+	     },
+	     error:function(request,status,error){
+	    	alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+	     }
+  });
+};

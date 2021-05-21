@@ -20,4 +20,10 @@ public class UserServiceImpl implements UserService{
 		mapper.userJoin(user);
 	}
 	
+	@Override
+	public int checkId(String userId) {
+		log.info("checkId : Service 진입");
+		return mapper.checkId(userId);
+	}
+	
 }

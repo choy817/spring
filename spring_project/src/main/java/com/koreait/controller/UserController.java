@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.service.UserService;
 import com.koreit.domain.UserDTO;
@@ -35,16 +38,26 @@ public class UserController {
 		userService.userJoin(user);
 		log.info("회원가입 성공");
 		return "redirect:/user/joinOk";
-		
 	}
+	@ResponseBody
+	@GetMapping("/checkId")
+	public int checkId(@RequestBody String userId) {
+		log.info("checkId : Controller 진입");
+		int result=userService.checkId(userId);
+		log.info(result);
+		if(result==0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
 	@GetMapping("/login")
 	public void login() {
 		
 	}
 	
 	@GetMapping("/joinOk")
-	public void joinOk() {
-		
-	}
+	public void joinOk() {}
 	
 }

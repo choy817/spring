@@ -13,27 +13,35 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	    <!-- MySQL dataSource -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!--     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/spring_project?useSSL=false&amp;serverTimezone=UTC">
         </property>
         <property name="username" value="web"/>
         <property name="password" value="webwebweb"/>
-    </bean>        
-    <!-- 자신의 PC(로컬)에 MySql을 설치했을 경우 -->
-<!--     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url"
-            value="jdbc:mysql://127.0.0.1:3306/spring_project?useSSL=false&amp;serverTimezone=UTC">
-        </property>
-        <property name="username" value="web"/>
-        <property name="password" value="web"/>
-    </bean> -->        
-     
+    </bean>  -->       
+	 <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/spring_project?useSSL=false&amp;serverTimezone=UTC"/>
+		<property name="username" value="web"/>
+		<property name="password" value="webwebweb"/>
+	</bean>
+	
+	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>  
+
     <!-- mybatis SqlSessionFactoryBean -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+	<bean id="sqlfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"/>
         <property name="mapperLocations" value="classpath:/META-INF/com/koreait/mapper/**/*.xml"/>
+        
+        <property name="configuration">
+			<bean class="org.apache.ibatis.session.Configuration">
+				<property name="mapUnderscoreToCamelCase" value="true"/>			
+			</bean>
+		
+		</property>
     </bean>	
    
     	

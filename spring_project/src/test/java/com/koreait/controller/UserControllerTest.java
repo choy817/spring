@@ -31,8 +31,12 @@ public class UserControllerTest {
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
-	@Test
+//	@Test
 	public void joinTest() throws Exception {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/joinOk")));
+	}
+	@Test
+	public void checkIdTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/checkId")));
 	}
 }

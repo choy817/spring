@@ -21,7 +21,8 @@ public class UserMapperTest {
 	@Setter(onMethod_=@Autowired)
 	UserMapper mapper;
 	
-	@Test
+//	@Test
+//	회원가입
 	public void joinInsertTest() {
 		UserDTO user=new UserDTO();
 		user.setUserNo(9);
@@ -41,5 +42,14 @@ public class UserMapperTest {
 		log.info(user);
 		
 	}
-	
+	@Test
+	public void checkIdTest() throws Exception{
+		String userId1="dafhdfh";
+		String userId2="apple";
+		mapper.checkId(userId1);
+		mapper.checkId(userId2);
+		
+		
+		
+	}
 }

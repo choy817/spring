@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
 <mapper namespace="com.koreait.mapper.UserMapper">
+	<!-- 회원가입 -->
 	<insert id="userJoin">
 		INSERT INTO tbl_user (userNo,userId, userName,userPw,userPwCheck,userEmail,sendNumber,
 		userPhone,userPostcode,userAddr,userDetailAddr,userEtcAddr)
@@ -9,5 +10,12 @@
 		#{userId},#{userName},#{userPw},#{userPwCheck},#{userEmail},#{sendNumber},#{userPhone},
 		#{userPostcode},#{userAddr},#{userDetailAddr},#{userEtcAddr});
 	</insert>
-		
+	<!-- 아이디 검사 -->
+	<select id="checkId" resultType="_int">
+		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId}
+	</select>	
+	<!-- 로그인 -->
+	<select id="login" resultType="com.koreait.domain.UserDTO">
+		SELECT * FROM tbl_user WHERE USERID=#{userId} AND USERPW=#{userPw}
+	</select>
 </mapper>

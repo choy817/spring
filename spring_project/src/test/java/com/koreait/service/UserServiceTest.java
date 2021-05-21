@@ -18,7 +18,7 @@ public class UserServiceTest {
 	@Setter(onMethod_=@Autowired)
 	UserService userService;
 	
-	@Test
+//	@Test
 	public void joinTest() {
 		// given : 주어진 것들로
 		UserDTO user=new UserDTO();
@@ -40,5 +40,12 @@ public class UserServiceTest {
         log.info(user);
 	}
 	
+	@Test
+	public void checkIdTest() {
+		UserDTO user=new UserDTO();
+		String userId="dafhdfh";
+		userService.checkId(userId);
+		log.info(userService.checkId(userId));
+	}
 	
 }

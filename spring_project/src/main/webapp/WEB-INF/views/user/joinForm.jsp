@@ -77,7 +77,7 @@
               <tbody>
                 <tr>
                   <th><span>아이디</span></th>
-                  <td><input type="text" name="userId" placeholder="ID 를 입력하세요.">
+                  <td><input type="text" name="userId" onkeyup="checkId()" placeholder="ID 를 입력하세요.">
                   <span id="checkId"></span>
                   </td>
                 </tr>
@@ -190,7 +190,7 @@
    </footer> 
     <!-- End Footer -->
 </body>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
@@ -247,5 +247,6 @@
         }).open();
     }
 </script>
+<script> var contextPath = "${pageContext.request.contextPath}";</script>
 <script src="/assets/js/user/joinForm.js"></script>
 </html>
