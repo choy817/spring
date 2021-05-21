@@ -35,8 +35,18 @@ public class UserControllerTest {
 	public void joinTest() throws Exception {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/joinOk")));
 	}
-	@Test
+//	@Test
 	public void checkIdTest() throws Exception{
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/checkId")));
+	}
+//	@Test
+	public void loginTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/login")));
+	}
+	@Test
+	public void authTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/joinOk"))
+				.andReturn().getModelAndView()
+				);
 	}
 }

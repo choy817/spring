@@ -1,4 +1,4 @@
-package com.koreit.domain;
+package com.koreait.domain;
 
 import lombok.Data;
 
@@ -16,5 +16,6 @@ public class UserDTO {
 	private String userAddr;
 	private String userDetailAddr;
 	private String userEtcAddr;
+	private int userCertification;
 }
 

@@ -68,28 +68,21 @@
 	<!-- 서울도서관 자체 로그인 -->
 	<div class="loginForm">	
 		<!-- <a href="/" class="goMain" title="메인화면"><img src="/image/ko/local/home/goMain.png" alt="메인으로"></a> -->
-		<div class="langSelect">
-<!-- 			<select id="language" title="언어선택">				
-				<option value="kor">한국어</option>
-				<option value="eng">English</option>
-			</select>
-			<a href="#" onclick="changeLang()" title="언어 변경">Go</a>  -->
-		</div>
 		<p class="logo"><a href="/" title="메인화면"><img src="/image/ko/local/logo.png" alt="서울도서관"></a></p>
 		<div id="kor">
-			<form action="https://lib.seoul.go.kr/login" method="post" onsubmit="return fn_submit()">
-				<input type="hidden" name="deviceName" id="deviceName" value="">
-						<input type="hidden" name="retUrl" value="/">
+			<form class="loginForm" name="loginForm" method="post">
+<!-- 				<input type="hidden" name="deviceName" id="deviceName" value="">
+						<input type="hidden" name="retUrl" value="/"> -->
 				<fieldset>
 					<legend class="loginMsg">로그인</legend>			
 					<div class="inputFields">
-						<p class="inputId"><input type="text" id="id" name="id" title="도서관 아이디" placeholder="아이디"></p>
-						<p class="inputPw"><input type="password" id="password" name="password" title="비밀번호(10~15자리)" placeholder="비밀번호"></p>
-						
+						<p class="inputId"><input type="text" id="userId" name="userId" title="도서관 아이디" placeholder="아이디"></p>
+						<span id="checkId"></span>
+						<p class="inputPw"><input type="password" id="userPw" name="userPw" title="비밀번호(10~15자리)" placeholder="비밀번호"></p>
+						<span id="checkPw"></span>
 						<p class="saveId">
-							
 						</p>
-						<p class="inputSubmit"><input type="submit" value="로그인"></p>
+						<p class="inputSubmit"><input type="button" value="로그인" onclick="javascript:sendIt();"></p>
 					</div>
 					<div class="loginMenu">
 						<a href="/memberJoin/findId?target=Y" title="아이디찾기">아이디찾기</a>
@@ -100,22 +93,6 @@
 				</fieldset>
 			</form>
 		</div>
-		<div id="eng" style="display:none;">
-			<form action="https://lib.seoul.go.kr/login" method="post" onsubmit="return fn_submit()">
-						<input type="hidden" name="retUrl" value="/">
-				<fieldset>
-					<legend>로그인</legend>			
-					<div class="inputFields">
-						<p class="inputId"><input type="text" id="id2" name="id" title="ID" placeholder="ID"></p>
-						<div class="viewPw" style="display: none;"></div>
-						<p class="inputPw"><input type="password" id="password2" name="password" title="Password" placeholder="Password"></p>
-						<p class="inputSubmit"><input type="submit" value="Login"></p>
-						<p class="saveId">
-						</p>
-					</div>
-				</fieldset>
-			</form>
-		</div>	
 	</div>
 <!-- //Login -->
 
@@ -144,16 +121,13 @@
     </div>
    </footer> 
     <!-- End Footer -->
-
-
+</body>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
-    <script src="/assets/js/custom.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-
-</body>
+    <script> var contextPath = "${pageContext.request.contextPath}";</script>
+	<script src="/assets/js/user/login.js"></script>
 </html>

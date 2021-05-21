@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.koreit.domain.UserDTO;
+import com.koreait.domain.AuthDTO;
+import com.koreait.domain.UserDTO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -40,12 +41,25 @@ public class UserServiceTest {
         log.info(user);
 	}
 	
-	@Test
+//	@Test
 	public void checkIdTest() {
 		UserDTO user=new UserDTO();
 		String userId="dafhdfh";
 		userService.checkId(userId);
 		log.info(userService.checkId(userId));
 	}
-	
+//	@Test
+	public void loginTest() {
+		UserDTO user=new UserDTO();
+		user.setUserId("banana");
+		user.setUserPw("abcd1234");
+		userService.login(user);
+	}
+	@Test
+	public void joinOkTest() {
+		UserDTO user=new UserDTO();
+		user.setUserEmail("cyjspringtest@gmail.com");
+		userService.userAuth(user.getUserEmail());
+		log.info("이메일 : " + user.getUserEmail());
+	}
 }

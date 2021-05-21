@@ -65,8 +65,11 @@
     <div class="bodyBox01">
     		<h2 class="boardText">회원가입</h2>
 			<div class="bodyBox12 subBoxTxt">
-				<p>회원가입이 완료되었습니다.<br>이메일 인증을 진행하세요.</p>
+				<p>이메일 인증이 완료되었습니다.</p>
 		</div>
+		<div class="button">
+	        <button type="button" class="btn btn-info">로그인</button>
+	    </div>
 	</div>
     <%--본문 끝 --%>
     <!-- Start Footer -->

@@ -7,8 +7,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.koreait.domain.AuthDTO;
+import com.koreait.domain.UserDTO;
 import com.koreait.mapper.UserMapper;
-import com.koreit.domain.UserDTO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -26,11 +27,11 @@ public class UserMapperTest {
 	public void joinInsertTest() {
 		UserDTO user=new UserDTO();
 		user.setUserNo(9);
-		user.setUserId("apple");
-		user.setUserName("김사과");
+		user.setUserId("banana");
+		user.setUserName("반하나");
 		user.setUserPw("abcd1234");
 		user.setUserPwCheck("abcd1234");
-		user.setUserEmail("apple@apple.com2");
+		user.setUserEmail("cyjspringtest@gamil.com");
 		user.setSendNumber("1234");
 		user.setUserPhone("01000000000");
 		user.setUserPostcode("01234");
@@ -42,14 +43,26 @@ public class UserMapperTest {
 		log.info(user);
 		
 	}
-	@Test
+//	@Test
 	public void checkIdTest() throws Exception{
 		String userId1="dafhdfh";
 		String userId2="apple";
 		mapper.checkId(userId1);
 		mapper.checkId(userId2);
-		
-		
-		
+	}
+	
+//	@Test
+	public void login() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserId("banana");
+		user.setUserPw("abcd1234");
+		mapper.login(user);
+	}
+	@Test
+	public void authTest() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserEmail("cyjspringtest@gmail.com");
+		mapper.userAuth(user.getUserEmail());
+		log.info(user);
 	}
 }

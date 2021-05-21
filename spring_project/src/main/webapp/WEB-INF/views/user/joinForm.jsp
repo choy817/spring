@@ -83,13 +83,13 @@
                 </tr>
                 <tr>
                   <th><span>이름</span></th>
-                  <td><input type="text" name="userName" placeholder="">
+                  <td><input type="text" name="userName" placeholder="이름을 입력하세요">
                   <span id="checkName"></span>
                   </td>
                 </tr>
                 <tr>
                   <th><span>비밀번호</span></th>
-                  <td><input type="password" name="userPw" placeholder="비밀번호를 입력해주세요.">
+                  <td><input type="password" name="userPw" placeholder="비밀번호를 입력하세요">
                   <span id="checkPw"></span>
                   </td>
                 </tr>
@@ -102,29 +102,29 @@
                 <tr class="email">
                   <th><span>이메일</span></th>
                   <td>
-                    <input type="text" name="userEmail" placeholder=""><!-- <span class="mar10">@</span>
+                    <input type="text" name="userEmail" placeholder="예) gildong@email.com"><!-- <span class="mar10">@</span>
                     <input type="text"  class="email email2" placeholder=""> -->
-                    <a href="javascript:;" class="btn_confirm">인증번호 발송</a>
+                    <!-- <a href="javascript:;" class="btn_confirm">인증번호 발송</a> -->
                     <span id="checkEmail"></span>
                   </td>
                 </tr>
-                <tr>
+<!--                 <tr>
                   <th><span>인증번호 확인</span></th>
                   <td><input type="text" name="sendNumber" placeholder="10:00">
-                    <!-- <a href="javascript:;" class="btn_confirm">인증번호 발송</a> -->
+                    <a href="javascript:;" class="btn_confirm">인증번호 발송</a>
                     <span id="checkNumber"></span>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <th><span>휴대폰 번호</span></th>
-                  <td><input type="text" name="userPhone" placeholder="휴대폰 번호를 입력하세요.">
+                  <td><input type="text" name="userPhone" placeholder="'-'없이 번호만 입력해 주세요">
                   <span id="checkPhone"></span>
                   </td>
                 </tr>
                 <tr class="address">
                   <th><span>주소</span></th>
                   <td>
-					<input type="text" name="userPostcode" id="sample6_postcode" placeholder="우편번호">
+					<input type="text" name="userPostcode" id="sample6_postcode" placeholder="우편번호" readonly>
 					<input type="button" class="postcode_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					<input type="text" name="userAddr" id="sample6_address" placeholder="주소"><br>
 					<input type="text" name="userDetailAddr" id="sample6_detailAddress" placeholder="상세주소">

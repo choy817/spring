@@ -10,6 +10,10 @@
 		#{userId},#{userName},#{userPw},#{userPwCheck},#{userEmail},#{sendNumber},#{userPhone},
 		#{userPostcode},#{userAddr},#{userDetailAddr},#{userEtcAddr});
 	</insert>
+	<!-- 이메일 인증 -->
+	<insert id="joinOk" parameterType="map">
+		INSERT INTO userAuth VALUES(#{userEmail}, #{authKey})
+	</insert>
 	<!-- 아이디 검사 -->
 	<select id="checkId" resultType="_int">
 		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId}
@@ -18,4 +22,9 @@
 	<select id="login" resultType="com.koreait.domain.UserDTO">
 		SELECT * FROM tbl_user WHERE USERID=#{userId} AND USERPW=#{userPw}
 	</select>
+	<!-- 이메일 인증 완료 시 -->
+	<update id="userAuth">
+	 <![CDATA[UPDATE tbl_user SET userCertification = 1 WHERE (SELECT COUNT(*) FROM userAuth WHERE userEmail = #{userEmail}) > 0]]>
+	</update>
+	
 </mapper>
