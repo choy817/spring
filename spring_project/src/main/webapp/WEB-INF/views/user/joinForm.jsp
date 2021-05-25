@@ -153,14 +153,10 @@
               </ul>
             </div>
           </div>
+        </form>
           <div class="btn_wrap">
             <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="가입">
           </div>
-          <!-- <div class="button">
-	        <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="가입">
-	        <input type="button" class="btn btn-secondary" value="목록">
-	      </div> -->
-        </form>
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->
     </div> <!-- container E -->

@@ -23,16 +23,14 @@ public class UserMapperTest {
 	UserMapper mapper;
 	
 //	@Test
-//	회원가입
 	public void joinInsertTest() {
 		UserDTO user=new UserDTO();
-		user.setUserNo(9);
+		user.setUserNo(0);
 		user.setUserId("banana");
 		user.setUserName("반하나");
 		user.setUserPw("abcd1234");
 		user.setUserPwCheck("abcd1234");
 		user.setUserEmail("cyjspringtest@gamil.com");
-		user.setSendNumber("1234");
 		user.setUserPhone("01000000000");
 		user.setUserPostcode("01234");
 		user.setUserAddr("테스트시 테스트구");
@@ -43,12 +41,12 @@ public class UserMapperTest {
 		log.info(user);
 		
 	}
-//	@Test
+	@Test
 	public void checkIdTest() throws Exception{
-		String userId1="dafhdfh";
-		String userId2="apple";
-		mapper.checkId(userId1);
-		mapper.checkId(userId2);
+		UserDTO user=new UserDTO();
+		user.setUserId("apple");
+		String userId="apple";
+		mapper.checkId(userId);
 	}
 	
 //	@Test
@@ -58,11 +56,18 @@ public class UserMapperTest {
 		user.setUserPw("abcd1234");
 		mapper.login(user);
 	}
-	@Test
+//	@Test
 	public void authTest() throws Exception{
 		UserDTO user=new UserDTO();
 		user.setUserEmail("cyjspringtest@gmail.com");
 		mapper.userAuth(user.getUserEmail());
 		log.info(user);
+	}
+//	@Test
+	public void certTest() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserId("apple");
+		mapper.checkCert(user);
+		
 	}
 }

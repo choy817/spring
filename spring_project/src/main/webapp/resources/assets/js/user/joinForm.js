@@ -100,25 +100,32 @@ function sendIt(){
 }
 
 function checkId(){
+	var idCheck=0;
 	var userId = $('input[name=userId]').val();
-	console.log(userId);
+	console.log("가져온 아이디 : "+userId);
+	
 	$.ajax({
-		 type		:'post',
-	     url		:contextPath+'/user/checkId', 
-	     data		:userId,
-	     success	:function(data){
-	     console.log(data);
-	         if($.trim(data)==0){
-	             $('#checkId').html("사용 가능한 아이디입니다.");  
-	             $("#checkId").css("color", "#4CAF50");
-	         }else{
-	             $('#checkId').html("중복된 아이디입니다.");
-	             $("#checkId").css("color", "#f44336");
-	         }
-	     },
-	     error:function(request,status,error){
-	    	alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-	     }
-  });
-};
+		url : contextPath+"/user/checkId",
+		type : "post",
+		dataType:"JSON",
+		data : userId,
+		contentType : "application/json; charset=UTF-8",
+		success : function(data){
+			/*var result=JSON.parse(data);*/
+			console.log(data);
+			if(data.check == 1){
+				console.log("들어옴");
+				$('#checkId').html("중복된 아이디입니다.");
+				$("#checkId").css("color", "#f44336");
+			}else if(data.check == 0){
+				console.log("들어옴2");
+				$('#checkId').html("사용 가능한 아이디입니다.");  
+				$("#checkId").css("color", "#4CAF50");
+			}else{
+				console.log("조건문 통과~")
+			}
+		}
+	});
+	
+}
 

@@ -39,11 +39,13 @@ public class UserControllerTest {
 	public void checkIdTest() throws Exception{
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/checkId")));
 	}
-//	@Test
-	public void loginTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/login")));
-	}
 	@Test
+	public void loginTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+				.param("userId", "apple")
+				.param("userPw", "Abcd1234!")));
+	}
+//	@Test
 	public void authTest() throws Exception{
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/joinOk"))
 				.andReturn().getModelAndView()

@@ -16,4 +16,7 @@ public interface UserMapper {
 	
 	public void userAuth(String userEmail);
 	
+	public int checkCert(UserDTO user);
+	
+	
 }

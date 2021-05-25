@@ -64,17 +64,20 @@ public class UserServiceImpl implements UserService{
 		log.info(userEmail);
 		mapper.userAuth(userEmail);
 	}
-	//아이디체크
-	@Override
-	public int checkId(String userId) {
-		log.info("checkId : Service 진입");
-		return mapper.checkId(userId);
-	}
+
 	//로그인
 	@Override
 	public UserDTO login(UserDTO user) {
 		log.info("login : Service 진입");
 		return mapper.login(user);
 	}
+	@Override
+	public int checkCert(UserDTO user) {
+		return mapper.checkCert(user);
+	}
 	
+	@Override
+	public int checkId(String userId) {
+		return mapper.checkId(userId);
+	}
 }

@@ -9,9 +9,9 @@ public interface UserService {
 	public int checkId(String userId);
 	//로그인
 	public UserDTO login(UserDTO user);
-	
-//	public void joinOk(UserDTO user);
-	
+	//인증상태 변경
 	public void userAuth(String userEmail);
+	//인증상태 확인
+	public int checkCert(UserDTO user);
 	
 }

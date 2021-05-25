@@ -42,12 +42,12 @@ public class UserServiceTest {
 	}
 	
 //	@Test
-	public void checkIdTest() {
-		UserDTO user=new UserDTO();
-		String userId="dafhdfh";
-		userService.checkId(userId);
-		log.info(userService.checkId(userId));
-	}
+//	public void checkIdTest() {
+//		UserDTO user=new UserDTO();
+//		user.setUserId("apple");
+//		userService.checkId(user);
+//		log.info(userService.checkId(user));
+//	}
 //	@Test
 	public void loginTest() {
 		UserDTO user=new UserDTO();
@@ -55,11 +55,17 @@ public class UserServiceTest {
 		user.setUserPw("abcd1234");
 		userService.login(user);
 	}
-	@Test
+//	@Test
 	public void joinOkTest() {
 		UserDTO user=new UserDTO();
 		user.setUserEmail("cyjspringtest@gmail.com");
 		userService.userAuth(user.getUserEmail());
 		log.info("이메일 : " + user.getUserEmail());
+	}
+//	@Test
+	public void certTest() {
+		UserDTO user=new UserDTO();
+		user.setUserId("apple");
+		userService.checkCert(user);
 	}
 }

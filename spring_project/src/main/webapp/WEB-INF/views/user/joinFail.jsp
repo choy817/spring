@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html><head>
     <title>로그인</title>
     <meta charset="utf-8">
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css">
-    <link rel="stylesheet" href="/assets/css/user/login.css">
+    <link rel="stylesheet" href="/assets/css/user/joinOk.css">
 </head>
 
 <body>
@@ -52,53 +53,24 @@
                         </li> -->
                     </ul>
                 </div>
-                <div class="navbar align-self-center d-flex">
-                    <a class="nav-link" href="#"><i class="bx bx-bell bx-sm bx-tada-hover text-primary"></i></a>
-                    <a class="nav-link" href="#"><i class="bx bx-cog bx-sm text-primary"></i></a>
-                    <a class="nav-link" href="#"><i class="bx bx-user-circle bx-sm text-primary"></i></a>
+                <div class="menuSearch">
+                	<input type="text" id="searchQuery1" placeholder="홈페이지내 검색" title="검색어 입력창" onkeydown="javascript:if(event.keyCode == 13) totalSearch();" autocomplete="off">
+                	<button type="button" class="btn_search" onclick="totalSearch();">검색</button>
                 </div>
             </div>
         </div>
     </nav>
     <!-- Close Header -->
-    
-	
-	<!-- Login -->
-
-	<!-- 서울도서관 자체 로그인 -->
-	<div class="loginForm">	
-		<!-- <a href="/" class="goMain" title="메인화면"><img src="/image/ko/local/home/goMain.png" alt="메인으로"></a> -->
-		<!-- <p class="logo"><a href="/" title="메인화면"><img src="/image/ko/local/logo.png" alt="서울도서관"></a></p> -->
-		<div id="kor">
-			<form class="loginForm" name="loginForm" method="post">
-<!-- 				<input type="hidden" name="deviceName" id="deviceName" value="">
-						<input type="hidden" name="retUrl" value="/"> -->
-				<fieldset>
-					<legend class="loginMsg">로그인</legend>			
-					<div class="inputFields">
-						<p class="inputId"><input type="text" id="userId" name="userId" title="도서관 아이디" placeholder="아이디"></p>
-						<span id="checkId"></span>
-						<p class="inputPw"><input type="password" id="userPw" name="userPw" title="비밀번호(10~15자리)" placeholder="비밀번호"></p>
-						<span id="checkPw"></span>
-						<p class="saveId">
-						</p>
-						<p class="inputSubmit"><input type="button" value="로그인" onclick="javascript:sendIt();"></p>
-					</div>
-					<div class="loginMenu">
-						<a href="/memberJoin/findId?target=Y" title="아이디찾기">아이디찾기</a>
-						<a href="/memberJoin/findPw?target=Y" title="아이디찾기">비밀번호 재설정</a>
-						<a href="/memberJoin/agree?target=Y" target="_blank" title="새창으로열림">회원가입</a>
-					</div>
-					<p class="loginBg"></p>
-				</fieldset>
-			</form>
+    <%--본문 시작 --%>
+    <div class="bodyBox01">
+    		<h2 class="boardText">로그인</h2>
+			<div class="bodyBox12 subBoxTxt">
+				<p>이메일 인증 후 로그인하세요</p>
 		</div>
 	</div>
-<!-- //Login -->
-
-	
+    <%--본문 끝 --%>
     <!-- Start Footer -->
-   <footer>
+  <footer>
 	<div class="footerContents">
         <div class="inner">
 <!--             <div class="chatBot">
@@ -122,12 +94,12 @@
    </footer> 
     <!-- End Footer -->
 </body>
-	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
+    <script src="/assets/js/user/joinOk.js"></script>
     <script> var contextPath = "${pageContext.request.contextPath}";</script>
-	<script src="/assets/js/user/login.js"></script>
 </html>

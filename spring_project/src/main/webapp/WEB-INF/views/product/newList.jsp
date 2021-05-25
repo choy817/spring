@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html><head>
     <title>신간 목록</title>
@@ -53,10 +54,20 @@
                         </li> -->
                     </ul>
                 </div>
-                <div class="menuSearch">
-                	<input type="text" id="searchQuery1" placeholder="홈페이지내 검색" title="검색어 입력창" onkeydown="javascript:if(event.keyCode == 13) totalSearch();" autocomplete="off">
-                	<button type="button" class="btn_search" onclick="totalSearch();">검색</button>
-                </div>
+                <c:choose>
+                	<c:when test="${sessionScope.user ne null}">
+	                	<div class="session">
+							<p>${sessionScope.user}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+							</p>
+	               		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="login">
+                			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>

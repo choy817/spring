@@ -4,24 +4,31 @@
 <mapper namespace="com.koreait.mapper.UserMapper">
 	<!-- 회원가입 -->
 	<insert id="userJoin">
-		INSERT INTO tbl_user (userNo,userId, userName,userPw,userPwCheck,userEmail,sendNumber,
+		INSERT INTO tbl_user (userNo,userId, userName,userPw,userPwCheck,userEmail,
 		userPhone,userPostcode,userAddr,userDetailAddr,userEtcAddr)
-		VALUES((select * from (select max(userNo)+1 from tbl_user) as v),
-		#{userId},#{userName},#{userPw},#{userPwCheck},#{userEmail},#{sendNumber},#{userPhone},
+		VALUES(
+		(select (case count(*)  when 0 then 1 else max(userNo) + 1 end) from tbl_user as seq),
+		#{userId},#{userName},#{userPw},#{userPwCheck},#{userEmail},#{userPhone},
 		#{userPostcode},#{userAddr},#{userDetailAddr},#{userEtcAddr});
 	</insert>
 	<!-- 이메일 인증 -->
 	<insert id="joinOk" parameterType="map">
 		INSERT INTO userAuth VALUES(#{userEmail}, #{authKey})
 	</insert>
+	
 	<!-- 아이디 검사 -->
-	<select id="checkId" resultType="_int">
-		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId}
+	<select id="checkId" resultType="int">
+		SELECT COUNT(*) FROM tbl_user WHERE userId=#{userId}
 	</select>	
 	<!-- 로그인 -->
 	<select id="login" resultType="com.koreait.domain.UserDTO">
-		SELECT * FROM tbl_user WHERE USERID=#{userId} AND USERPW=#{userPw}
+		SELECT * FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} -->
 	</select>
+	<!-- 이메일 인증 확인 -->
+	<select id="checkCert" resultType="_int">
+		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId} AND userCertification=1
+	</select>
+	
 	<!-- 이메일 인증 완료 시 -->
 	<update id="userAuth">
 	 <![CDATA[UPDATE tbl_user SET userCertification = 1 WHERE (SELECT COUNT(*) FROM userAuth WHERE userEmail = #{userEmail}) > 0]]>
