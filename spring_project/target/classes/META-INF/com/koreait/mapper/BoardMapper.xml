@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
+<mapper namespace="com.koreait.mapper.BoardMapper">
+	<sql id="criteria">
+		<!-- 검색어가 있을 경우 실행 -->
+		<if test="keyword!=null and type!=null">
+			<trim prefix="(" suffix=") a AND" prefixOverrides="OR">
+								<!-- collection : 전달받은 인쟈. List or Array 형태만 가능하다 -->
+				<foreach item="type" collection="typeArr">
+					<choose>
+						<when test="type=='T'.toString()">
+							OR (TITLE LIKE '%' || #{keyword} || '%') 
+						</when>
+						<when test="type=='C'.toString()">
+							OR (CONTENT LIKE '%' || #{keyword} || '%') 
+						</when>
+						<when test="type=='W'.toString()">
+							OR (WRITER LIKE '%' || #{keyword} || '%') 
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<!-- 리스트 가져오기 -->
+	<select id="getList" resultType="com.koreait.domain.BoardDTO">
+		SELECT * FROM tbl_board WHERE BNO>0
+	</select>
+	<!-- 검색 기준이 포함된 리스트 -->
+	<select id="getListWithPaging" resultType="com.koreait.domain.BoardDTO">
+		SELECT *
+		FROM  
+		(SELECT @rnum := @rnum + 1 AS rownum,tbl_board.* FROM (SELECT @rnum := 0) r, tbl_board ORDER BY bno DESC) result
+         WHERE
+         <include refid="criteria"></include>
+		rownum BETWEEN (1 + ( #{pageNum} - 1 ) * #{amount}) AND ( #{pageNum} * #{amount} )
+<!-- 		SELECT bno,title,content,writer,regdate,views FROM 
+		(SELECT @rownum:=@rownum+1 AS rn,bno,title,content,writer,regdate,views FROM tbl_board, (SELECT @rownum :=0 ) r
+		WHERE
+		<include refid="criteria"/>
+		<![CDATA[
+			@rownum<=#{pageNum}*#{amount} ORDER BY bno DESC) b
+			WHERE rn>=(#{pageNum}-1)*#{amount}
+		]]> -->
+	</select>
+	
+	<!-- 총 갯수 -->
+	<select id="getTotal" resultType="_int">
+		SELECT COUNT(*) FROM tbl_board WHERE
+		<include refid="criteria"/>
+		BNO>0
+	</select>
+
+
+
+
+</mapper>

@@ -45,6 +45,7 @@ div.button input{
     font-size: 15px;
     background: #476fad;
     border-radius: 0;
+    float: right;
 }
 /*footer 영역*/
 footer{
