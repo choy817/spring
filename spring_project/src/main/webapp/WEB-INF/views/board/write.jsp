@@ -64,26 +64,26 @@
     <div class="write_wrap">
  		<div class="writeText"><p>자유게시판</p></div>
  			<div class="form_wrap">
-	    	    <form action="" method="post" class="write">
+	    	    <form action="/board/write" method="post" class="write" enctype="multipart/form-data">
 	       			<div class="form-group">
 	              		<label for="title">제목</label>
 	           			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 작성해주세요.">
 	          		</div>
 	        		<div class="form-group">
 	            		<label for="writer">작성자</label>
-	            		<input type="text" class="form-control" id="writer" name="crea_id" placeholder="이름을 적어주세요.">
+	            		<input type="text" class="form-control" id="writer" name="writer" placeholder="이름을 적어주세요.">
 	          		</div>
 	          		<div class="form-group">
 	            		<label for="content">내용</label>
-	            		<textarea class="form-control" id="content" name="contents" rows="10"></textarea>
+	            		<textarea class="form-control" id="content" name="content" rows="10"></textarea>
 	          		</div>
 	          		<div class="form-group">
 	            		<label for="attach">파일 첨부</label>
-	            		<input type="file" class="form-control" id="attach" name="crea_id">
+	            		<input type="file" class="form-control" id="attach" name="attach">
 	          		</div>
 	          		<div class="button">
-	        		<button type="button" class="btn btn-info">등록</button>
-	        		<button type="button" class="btn btn-secondary">목록</button>
+		        		<button type="submit" class="btn btn-info">등록</button>
+		        		<button type="button" class="btn btn-secondary">목록</button>
 	        		</div>
 	    		</form>
     		</div>

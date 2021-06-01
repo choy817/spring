@@ -20,8 +20,9 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 @Log4j
-public class UserControllerTest {
-	//실제 spring에서 사용하는 context를 받아옴
+
+public class BoardControllerTest {
+	
 	@Setter(onMethod_=@Autowired)
 	WebApplicationContext context;
 	MockMvc mockMvc;
@@ -32,23 +33,15 @@ public class UserControllerTest {
 	}
 	
 //	@Test
-	public void joinTest() throws Exception {
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/joinOk")));
+	public void writeTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/write")
+				.param("title", "테스트 글 제목2")
+				.param("content", "테스트 글 내용2")
+				.param("writer", "작성자")));
 	}
-//	@Test
-	public void checkIdTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/checkId")));
-	}
-//	@Test
-	public void loginTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
-				.param("userId", "apple")
-				.param("userPw", "Abcd1234!")));
-	}
-//	@Test
-	public void authTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("user/joinOk"))
-				.andReturn().getModelAndView()
-				);
+	@Test
+	public void viewTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/view").param("bno", "1"))
+		.andReturn().getModelAndView().getModelMap());
 	}
 }

@@ -10,4 +10,10 @@ public class BoardDTO {
 	private String writer;
 	private String regdate;
 	private int views;
+	
+	private int fileNo;
+	private String fileName;
+	private String realName;
+	private int fileSize;
+	private String delGb;//삭제 구분
 }

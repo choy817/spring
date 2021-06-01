@@ -99,7 +99,7 @@
 		  	<c:forEach var="board" items="${list }">
 			    <tr class="table-light">
 			      <td>${board.bno}</td>
-			      <td>${board.title}</td>
+			      <td><a class="goView" href="${board.bno }">${board.title}</a></td>
 			      <td>${board.writer}</td>
 			      <td>${board.regdate}</td>
 			      <td>${board.views}</td>
@@ -143,6 +143,11 @@
 		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 		    	<input type="hidden" name="type" value="${pageMaker.cri.type }">
 		    	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		   </form>
+		   <%-- 다른 페이지로 이동한 후 다시 목록 돌아올 때 이전 페이지 번호를 기억 --%>
+		   <form action="" id="pageForm">
+		   		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 		   </form>
 	</div>
  
@@ -205,6 +210,18 @@
     		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     		actionForm.submit();
     	});
+    </script>
+    <script type="text/javascript">
+    	var pageForm=$("#pageForm");
+    	
+    	$(".goView").on("click",function(e){
+    		e.preventDefault();
+    																	//내가 클릭한 href의 값(bno)
+    		pageForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href") +"'>")
+    		pageForm.attr("action","/board/view");
+    		pageForm.submit();
+    	});
+    	
     </script>
 </body>
 </html>

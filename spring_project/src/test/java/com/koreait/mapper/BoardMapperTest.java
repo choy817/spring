@@ -27,7 +27,7 @@ public class BoardMapperTest {
 	public void getListTest() {
 		boardMapper.getList();
 	}
-	@Test
+//	@Test
 	public void getListWithPaging() {
 		Criteria cri=new Criteria();
 		cri.setAmount(10);
@@ -35,5 +35,20 @@ public class BoardMapperTest {
 		boardMapper.getListWithPaging(cri).forEach(board->{
 			log.info("board: "+board);
 		});
+	}
+//	@Test
+	public void writeTest() {
+		BoardDTO board=new BoardDTO();
+		board.setTitle("게시글 테스트");
+		board.setContent("게시글 테스트입니다");
+		board.setWriter("바나나");
+		
+		boardMapper.write(board);
+		log.info(board);
+	}
+	@Test
+	public void viewTest() {
+		long bno=1L;
+		log.info(boardMapper.read(bno));
 	}
 }

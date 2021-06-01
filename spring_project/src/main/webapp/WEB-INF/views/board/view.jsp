@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html><head>
     <title>게시글 보기</title>
@@ -64,6 +65,7 @@
     
     <div class="table_wrap">
     	<div class="writeText"><p>자유게시판</p></div>
+    	<form method="post" action="/board/remove">
 		 <table class="table">
 	        <colgroup>
 	            <col width="15%">
@@ -74,35 +76,39 @@
 	        <tbody>
 	            <tr class="">
 	                <th scope="col">제목</th>
-	                <td>안녕하세요</td>
+	                <td>${board.title}</td>
 	                <th scope="col">조회수</th>
-	                <td>0</td>
+	                <td>${board.views}</td>
 	            </tr>
 	            <tr class="">
 	                <th>작성자</th>
-	                <td>김사과</td>
+	                <td>${board.writer }</td>
 	                <th>작성시간</th>
-	                <td>5/11</td>
+	                <td>${board.regdate }</td>
 	            </tr>
 	            <tr class="">
 	                <th>내용</th>
-	                <td colspan="3" style="height: 400px; text-align: left;">
-	                  	  게시글 테스트
-	                </td>
+	                <td colspan="3" style="height: 400px; text-align: left;">${board.content }</td>
+	            </tr>
+	            <tr class="">
+	                <th scope="col">파일 첨부</th>
+	                <td colspan="3">${board.realName}</td>
 	            </tr>
 	        </tbody>
 	    </table>
+	   
 	    <div class="reply">
     	<textarea placeholder="댓글을 입력하세요"></textarea>
     	<button type="button" class="btn btn-info regit">등록</button>
     	</div>
+    <div class="button">
+	    <button type="button" class="btn btn-info" onclick="location.href='/board/modify?bno=${board.bno}'">수정</button>
+	    <button type="submit" class="btn btn-info">삭제</button>
+	    <button type="button" class="btn btn-secondary" onclick="location.href='/board/list?pageNum=${cri.pageNum}&amount=${cri.amount}'">목록</button>
+	</div>
+	</form> 
     </div>
     
-    <div class="button">
-	    <button type="button" class="btn btn-info">수정</button>
-	    <button type="button" class="btn btn-secondary">목록</button>
-	</div>
-	
     <!-- Start Footer -->
   <footer>
 	<div class="footerContents">
