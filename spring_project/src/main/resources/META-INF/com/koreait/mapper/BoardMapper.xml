@@ -55,7 +55,14 @@
 	<select id="read" resultType="com.koreait.domain.BoardDTO">
 		SELECT * FROM tbl_board WHERE BNO=#{bno}
 	</select>
-	
+	<!-- 첨부파일 조회 -->
+	<select id="selectFile" resultType="com.koreait.domain.BoardDTO">
+		SELECT * FROM tbl_file WHERE BNO=#{bno} AND delGb='N'
+	</select>
+	<!-- 첨부파일 다운 -->
+	<select id="fileDown" resultType="com.koreait.domain.BoardDTO">
+		SELECT * FROM tbl_file WHERE FILENO=#{fileNo}
+	</select>
 	<!-- 글쓰기 -->
 	<insert id="write" useGeneratedKeys="true" keyProperty="bno">
 		<selectKey resultType="int" keyProperty="bno" order="BEFORE">
@@ -71,6 +78,27 @@
 		#{bno},#{fileSize}, #{fileName}, #{realName})
 	</insert>
 	
+	<!-- 게시글 조회수 증가 -->
+	<update id="viewsCnt">
+		UPDATE tbl_board SET VIEWS=VIEWS+1 WHERE BNO=#{bno}
+	</update>
+	<!-- 게시물 수정 -->
+	<update id="boardModify">
+		UPDATE tbl_board SET TITLE=#{title}, CONTENT=#{content} WHERE BNO=#{bno}
+	</update>
+	<!-- 첨부파일 수정 -->
+	<update id="fileModify">
+		UPDATE tbl_file SET DELGB='N' WHERE FILENO=#{fileNo}
+	</update>
+	<!-- 첨부파일 삭제 -->
+	<update id="fileDelete">
+		UPDATE tbl_file SET DELGB='Y' WHERE BNO=#{bno}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		DELETE FROM tbl_board WHERE BNO=#{bno}
+	</delete>
 
 
 </mapper>

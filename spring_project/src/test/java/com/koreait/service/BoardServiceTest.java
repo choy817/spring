@@ -30,8 +30,36 @@ public class BoardServiceTest {
 //		boardService.write(board);
 //		log.info(board);
 //	}
-	@Test
+//	@Test
 	public void viewTest() {
 		log.info(boardService.view(1L));
 	}
+//	@Test
+	public void selectFileTest() {
+		long bno=147L;
+		boardService.selectFile(bno);
+	}
+//	@Test
+	public void fileDownTest() {
+		int fileNo=16;
+		boardService.fileDown(fileNo);
+	}
+//	@Test
+	public void deleteTest() {
+		long bno=133L;
+		boardService.delete(bno);
+	}
+//	@Test
+	public void viewsCnt() {
+		long bno=146L;
+		boardService.viewsCnt(bno);
+	}
+//	@Test
+//	public void boardModify() {
+//		BoardDTO board=new BoardDTO();
+//		board.setBno(146L);
+//		board.setTitle("modifyServiceTest");
+//		board.setContent("modifyTest입니다");
+//		boardService.boardModify(board);
+//	}
 }

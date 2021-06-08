@@ -1,5 +1,7 @@
 package com.koreait.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,5 +27,13 @@ public class Criteria {
 		this.amount = amount;
 	}
 	
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum",this.pageNum)
+				.queryParam("amount", this.amount)
+				.queryParam("type",this.type)
+				.queryParam("keyword", this.keyword);
+		return builder.toUriString();
+	}
 	
 }

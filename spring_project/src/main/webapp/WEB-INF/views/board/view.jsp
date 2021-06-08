@@ -65,48 +65,62 @@
     
     <div class="table_wrap">
     	<div class="writeText"><p>자유게시판</p></div>
-    	<form method="post" action="/board/remove">
-		 <table class="table">
-	        <colgroup>
-	            <col width="15%">
-	            <col width="35%">
-	            <col width="15%">
-	            <col width="*">
-	        </colgroup>
-	        <tbody>
-	            <tr class="">
-	                <th scope="col">제목</th>
-	                <td>${board.title}</td>
-	                <th scope="col">조회수</th>
-	                <td>${board.views}</td>
-	            </tr>
-	            <tr class="">
-	                <th>작성자</th>
-	                <td>${board.writer }</td>
-	                <th>작성시간</th>
-	                <td>${board.regdate }</td>
-	            </tr>
-	            <tr class="">
-	                <th>내용</th>
-	                <td colspan="3" style="height: 400px; text-align: left;">${board.content }</td>
-	            </tr>
-	            <tr class="">
-	                <th scope="col">파일 첨부</th>
-	                <td colspan="3">${board.realName}</td>
-	            </tr>
-	        </tbody>
-	    </table>
-	   
-	    <div class="reply">
-    	<textarea placeholder="댓글을 입력하세요"></textarea>
-    	<button type="button" class="btn btn-info regit">등록</button>
-    	</div>
-    <div class="button">
-	    <button type="button" class="btn btn-info" onclick="location.href='/board/modify?bno=${board.bno}'">수정</button>
-	    <button type="submit" class="btn btn-info">삭제</button>
-	    <button type="button" class="btn btn-secondary" onclick="location.href='/board/list?pageNum=${cri.pageNum}&amount=${cri.amount}'">목록</button>
+    	<div class="form_wrap">
+			<form method="post" action="/board/delete" id="actionForm">
+	    		<input type="hidden" name="pageNum" value="${cri.pageNum}">
+				<input type="hidden" name="amount" value="${cri.amount}">
+				<input type="hidden" name="keyword" value="${cri.keyword}">
+				<input type="hidden" name="type" value="${cri.type}">
+			 <table class="table">
+		        <colgroup>
+		            <col width="15%">
+		            <col width="35%">
+		            <col width="15%">
+		            <col width="*">
+		        </colgroup>
+		        <tbody>
+		            <tr class="">
+		                <th scope="col">No</th>
+		                <td>${board.bno}</td>
+		                <th scope="col">조회수</th>
+		                <td>${board.views}</td>
+		            </tr>
+		            <tr class="">
+		                <th>작성자</th>
+		                <td>${board.writer }</td>
+		                <th>작성시간</th>
+		                <td>${board.regdate }</td>
+		            </tr>
+		            <tr class="">
+		                <th scope="col">제목</th>
+		                <td colspan="3">${board.title}</td>
+		            </tr>
+		            <tr class="">
+		                <th>내용</th>
+		                <td colspan="3" style="height: 400px; text-align: left;">${board.content }</td>
+		            </tr>
+		            <tr class="">
+		                <th scope="col">파일 첨부</th>
+		                <td colspan="3"><a href="javascript:void(0);" onclick="javascript:fileDown('${file.fileNo}'); return false">${file.realName}</a></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <div class="reply">
+	    	<textarea placeholder="댓글을 입력하세요"></textarea>
+	    	<button type="button" class="btn btn-info regit">등록</button>
+	    	</div>
+	    <div class="button">
+		    <input type="button" class="btn btn-info" onclick="location.href='/board/modify${cri.getListLink()}&bno=${board.bno}'" value="수정">
+		    <input type="submit" id="submitBtn" class="btn btn-info" value="삭제">
+		    <input type="button" class="btn btn-secondary" value="목록" onclick="location.href='/board/list${cri.getListLink()}'">
+		</div>
+			</form> 
+		</div>
+	<div>
+	   <form id="readForm">
+	   		<input type="hidden" id="fileNo" name="fileNo" value="">
+	   </form>
 	</div>
-	</form> 
     </div>
     
     <!-- Start Footer -->
@@ -132,14 +146,29 @@
         </div>
     </div>
    </footer> 
+</body>
 	<!-- End Footer -->
-	
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
-
-</body>
+    <script type="text/javascript">
+    	var readForm=$("#readForm");
+    	var actionForm=$("#actionForm");
+    	
+    	function fileDown(fileNo){
+    		console.log("파일들어옴")
+    		$("#fileNo").attr("value",fileNo);
+    		readForm.attr("action","/board/fileDown");
+    		readForm.submit();
+    	}
+    	
+    	$("#submitBtn").on("click",function(e){
+	    	actionForm.append("<input type='hidden' name='bno' value='${board.bno}'>");
+	    	actionForm.submit();
+    	});
+    </script>
 </html>

@@ -123,23 +123,3 @@ footer{
     line-height: 1.5;
     color: #666;
 }
-/*상단 검색 영역*/
-.menuSearch input {
-    position: relative;
-    top: -2px;
-    padding: 0 15px;
-    margin-left: 50px;
-    background: #ebebeb;
-    border-radius: 30px !important;
-    border: none !important;
-    height: 34px;
-    width: 240px;
-}
-.btn_search {
-    right: 20px;
-    width: 28px;
-    height: 30px;
-    margin-top: -15px;
-    padding-left: 15px;
-    background-image: url("/img/btn_search.png") no-repeat center;
-}

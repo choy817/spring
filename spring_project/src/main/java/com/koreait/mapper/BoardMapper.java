@@ -18,7 +18,21 @@ public interface BoardMapper {
 	//글 상세보기
 	public BoardDTO read(Long bno);
 	//파일 첨부
-	public void insertFile(Map<String, Object> map);
+	public int insertFile(Map<String, Object> map);
+	//파일 조회
+	public BoardDTO selectFile(long bno);
+	//파일 다운로드
+	public BoardDTO fileDown(int fileNo);
+	//게시글 삭제
+	public int delete(Long bno);
+	//게시글 조회수 증가
+	public int viewsCnt(Long bno);
+	//게시물 수정
+	public int boardModify(BoardDTO board);
+	//첨부파일 수정
+	public int fileModify(Map<String, Object> tempMap);
+	//첨부파일 삭제
+	public int fileDelete(BoardDTO board);
 	
 	
 

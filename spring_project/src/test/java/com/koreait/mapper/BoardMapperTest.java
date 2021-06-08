@@ -1,7 +1,5 @@
 package com.koreait.mapper;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +44,39 @@ public class BoardMapperTest {
 		boardMapper.write(board);
 		log.info(board);
 	}
-	@Test
+//	@Test
 	public void viewTest() {
 		long bno=1L;
 		log.info(boardMapper.read(bno));
+	}
+//	@Test
+	public void selectFileTest() {
+		long bno=147L;
+		boardMapper.selectFile(bno);
+	}
+//	@Test
+	public void fileDownTest() {
+		int fileNo=16;
+		boardMapper.fileDown(fileNo);
+		
+	}
+//	@Test
+	public void deleteTest() {
+		long bno=138L;
+		boardMapper.delete(bno);
+	}
+//	@Test
+	public void viewsCnt() {
+		long bno=147L;
+		boardMapper.viewsCnt(bno);
+	}
+	@Test
+	public void boardModifyTest() {
+		BoardDTO board=new BoardDTO();
+		board.setBno(147L);
+		board.setTitle("게시글 수정 테스트");
+		board.setContent("게시글 수정 MapperTest입니다");
+		boardMapper.boardModify(board);
+		
 	}
 }

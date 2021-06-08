@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html><head>
-    <title>게시글 작성</title>
+    <title>게시글 수정</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -52,10 +53,6 @@
                         </li> -->
                     </ul>
                 </div>
-                <div class="menuSearch">
-                	<input type="text" id="searchQuery1" placeholder="홈페이지내 검색" title="검색어 입력창" onkeydown="javascript:if(event.keyCode == 13) totalSearch();" autocomplete="off">
-                	<button type="button" class="btn_search" onclick="totalSearch();">검색</button>
-                </div>
             </div>
         </div>
     </nav>
@@ -64,25 +61,43 @@
     <div class="write_wrap">
  		<div class="writeText"><p>자유게시판</p></div>
  			<div class="form_wrap">
-	    	    <form action="/board/write" method="post" class="write" enctype="multipart/form-data">
+	    	    <form action="/board/modify" method="post" class="write" enctype="multipart/form-data">
+	    	    	<input type="hidden" name="pageNum" value="${cri.pageNum }">
+	    	    	<input type="hidden" name="amount" value="${cri.amount }">
+	    	    	<input type="hidden" name="keyword" value="${cri.keyword}">
+					<input type="hidden" name="type" value="${cri.type}">
 	       			<div class="form-group">
-	              		<label for="title">제목</label>
-	           			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 작성해주세요.">
+	              		<label for="title">No</label>
+	           			<input type="text" class="form-control" id="title" name="bno" value="${board.bno}" readonly>
 	          		</div>
 	        		<div class="form-group">
 	            		<label for="writer">작성자</label>
-	            		<input type="text" class="form-control" id="writer" name="writer" placeholder="이름을 적어주세요.">
+	            		<input type="text" class="form-control" id="writer" name="writer" value="${board.writer}" readonly>
+	          		</div>
+	       			<div class="form-group">
+	              		<label for="title">제목</label>
+	           			<input type="text" class="form-control" id="title" name="title" value="${board.title}">
 	          		</div>
 	          		<div class="form-group">
 	            		<label for="content">내용</label>
-	            		<textarea class="form-control" id="content" name="content" rows="10"></textarea>
+	            		<textarea class="form-control" id="content" name="content" rows="10">${board.content}</textarea>
 	          		</div>
 	          		<div class="form-group">
-	            		<label for="attach">파일 첨부</label>
-	            		<input type="file" class="form-control" id="attach" name="attach">
+	          			<label for="attach">파일 첨부</label>
+	          			<c:choose>
+	          				<c:when test="${file.realName == null }">
+			            		<input type="file" class="form-control" id="attach" name="attach">
+	          				</c:when>
+	          				<c:otherwise>
+	          					<span class="form-control" id="attached" name="attached" style="width: 80%;">${file.realName }
+			            		<a href="#this" id="${file.fileNo }" name="${file.fileNo }" class="btn delBtn">삭제</a><br>
+	          					</span>
+			            		<input type="file" class="form-control" id="attach" name="attach">
+	          				</c:otherwise>
+	          			</c:choose> 
 	          		</div>
 	          		<div class="button">
-		        		<button type="submit" class="btn btn-info">등록</button>
+		        		<button type="submit" class="btn btn-info">수정</button>
 		        		<button type="button" class="btn btn-secondary" onclick="location.href='/board/list${cri.getListLink()}'">목록</button>
 	        		</div>
 	    		</form>
@@ -113,11 +128,23 @@
 	    </div>
    </footer> 
     <!-- End Footer -->
+</body>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
-</body>
+     <script type="text/javascript">
+    	$(".delBtn").on("click",function(e){
+    		console.log("들어옴");
+    		//e.preventDefault();
+    		$("#attached").remove();
+    		//fileDelete($(this));
+    	});
+/*     	function fileDelete(obj){
+    		obj.parent().remove();
+    	} */
+    </script>
 </html>

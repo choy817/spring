@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BoardServiceImpl implements BoardService {
 	@Setter(onMethod_=@Autowired)
-	BoardMapper mapper;
+	BoardMapper boardMapper;
 
 	@Resource(name="fileUtils")
 	FileUtils fileUtils;
@@ -33,23 +33,23 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> getList() {
 		log.info("getList : Serivce진입");
-		return mapper.getList();
+		return boardMapper.getList();
 	}
 	//검색기준 적용된 리스트 가져오기
 	@Override
 	public List<BoardDTO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+		return boardMapper.getListWithPaging(cri);
 	}
 	//총 갯수
 	@Override
 	public int getTotal(Criteria cri) {
-		return mapper.getTotal(cri);
+		return boardMapper.getTotal(cri);
 	}
 	//글쓰기
 	@Override
 	public void write(BoardDTO board, MultipartHttpServletRequest request) {
 		//파일제외 글쓰기
-		mapper.write(board);
+		boardMapper.write(board);
 		MultipartHttpServletRequest multi=(MultipartHttpServletRequest)request;
 		Iterator<String> iter=multi.getFileNames();
 		MultipartFile multipartFile=null;
@@ -70,7 +70,7 @@ public class BoardServiceImpl implements BoardService {
 				int size = list.size();
 				for(int i=0; i<size; i++){ 
 					log.info("list : "+list.get(i));
-					mapper.insertFile(list.get(i)); 
+					boardMapper.insertFile(list.get(i)); 
 				}
 			
 				
@@ -81,7 +81,68 @@ public class BoardServiceImpl implements BoardService {
 	//게시글 상세보기
 	@Override
 	public BoardDTO view(Long bno) {
-		return mapper.read(bno);
+		return boardMapper.read(bno);
 	}
-
+	//파일 조회
+	@Override
+	public BoardDTO selectFile(long bno) {
+		return boardMapper.selectFile(bno);
+	}
+	//파일 다운로드
+	@Override
+	public BoardDTO fileDown(int fileNo) {
+		return boardMapper.fileDown(fileNo);
+	}
+	//게시글 삭제
+	@Override
+	public boolean delete(Long bno) {
+		return boardMapper.delete(bno)==1;//삭제성공시 1
+	}
+	//게시글 조회수 증가
+	@Override
+	public int viewsCnt(Long bno) {
+		return boardMapper.viewsCnt(bno);
+	}
+	//게시글 수정
+	@Override
+	public int boardModify(BoardDTO board, String[] files,String[] fileNames, MultipartHttpServletRequest request) throws Exception{
+		boardMapper.boardModify(board);
+		boardMapper.fileDelete(board);
+		int result = 0;
+		//request에 있는 파일 정보를 list로 변환
+		List<Map<String, Object>> list=fileUtils.parseUpdateFileInfo(board, files, fileNames, request);
+		Map<String, Object> tempMap=null;
+		int size=list.size();
+			
+		for (int i = 0; i < size; i++) {
+			tempMap=list.get(i);
+			//신규로 저장될 파일일 경우
+			if(tempMap.get("isNew").equals("Y")){
+				result=boardMapper.insertFile(tempMap);
+			//기존에 저장되어있는 파일일 경우	
+			}else {
+				result=boardMapper.fileModify(tempMap);
+			}
+		}
+		return result;
+	}
+	//첨부파일 수정
+//	@Override
+//	public int fileModify(BoardDTO board, String[] files,String[] fileNames, MultipartHttpServletRequest request) throws Exception{
+//		int result = 0;
+//		List<Map<String, Object>> list=fileUtils.parseUpdateFileInfo(board, files, fileNames, request);
+//		Map<String, Object> tempMap=null;
+//		int size=list.size();
+//			
+//		for (int i = 0; i < size; i++) {
+//			tempMap=list.get(i);
+//			if(tempMap.get("isNew").equals("Y")){
+//				result=boardMapper.fileDelete(tempMap);
+//			}else {
+//				result=boardMapper.fileModify(tempMap);
+//			}
+//		}
+//		return result;
+//	}
+	
 }

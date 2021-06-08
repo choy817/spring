@@ -39,9 +39,22 @@ public class BoardControllerTest {
 				.param("content", "테스트 글 내용2")
 				.param("writer", "작성자")));
 	}
-	@Test
+//	@Test
 	public void viewTest() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/view").param("bno", "1"))
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/view").param("bno", "147"))
 		.andReturn().getModelAndView().getModelMap());
+	}
+//	@Test
+	public void deleteTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/delete").param("bno", "129"))
+		.andReturn().getModelAndView().getModelMap());
+	}
+	@Test
+	public void boardModifyTest() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+				.param("bno", "147")
+				.param("title", "controller test")
+				.param("content", "컨트롤러 테스트중")
+				).andReturn().getFlashMap());
 	}
 }
