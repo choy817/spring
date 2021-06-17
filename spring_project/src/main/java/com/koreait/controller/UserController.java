@@ -92,7 +92,8 @@ public class UserController {
 			 boolean pwMatch=pwdEncoder.matches(user.getUserPw(), login.getUserPw());
 			 if(login != null && pwMatch ==true) {
 				 log.info("정보 일치");
-				 session.setAttribute("user",login.getUserName());
+//				 session.setAttribute("user",login.getUserName());
+				 session.setAttribute("user",user);
 				 return "redirect:/product/newList";
 			 }else {
 				 log.info("정보 불일치");

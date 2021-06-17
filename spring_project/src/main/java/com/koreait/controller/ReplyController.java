@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.koreait.domain.Criteria;
@@ -35,7 +36,7 @@ public class ReplyController {
 		log.info("create : Controller....."+reply);
 		int insertCnt=replyService.insertReply(reply);
 		log.info("Reply return : "+insertCnt);
-		
+		//js에서 데이터를 받는다
 		return insertCnt==1? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>("fail",HttpStatus.INTERNAL_SERVER_ERROR); 
 	}
@@ -50,17 +51,26 @@ public class ReplyController {
 	@GetMapping(value="/pages/{bno}/{page}",produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ReplyPageDTO> geList(@PathVariable("bno") Long bno, @PathVariable("page") int page){
 		log.info("getList : Controller");
-		//클래스 영역 안에 있는 전역변수에 의존성이 해당된다.
-		//메소드 안의 지역변수는 대체로 의존성에 해당되지 않는다.
 		Criteria cri=new Criteria(page,10);
 		return new ResponseEntity<ReplyPageDTO>(replyService.getListWithPaging(cri, bno),HttpStatus.OK);
 	}
 	//댓글 삭제
 	@DeleteMapping(value="/{rno}",produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("rno") Long rno) {
-		log.info("delete : Controller"+rno);
+		log.info("delete : Controller....."+rno);
 		int result=replyService.deleteReply(rno);
 		return result==1? new ResponseEntity<String>("success",HttpStatus.OK)
 				: new ResponseEntity<String>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-}
+	//댓글 수정
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH},value="/{rno}",
+			consumes="application/json", produces=MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> modify(@RequestBody ReplyDTO reply,@PathVariable("rno") Long rno){
+		log.info("modify : Controller..."+rno);
+		log.info("modify : "+reply);
+		reply.setRno(rno);
+		
+		return replyService.modifyReply(reply)==1? new ResponseEntity<String>("success",HttpStatus.OK)
+				: new ResponseEntity<String>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+ }

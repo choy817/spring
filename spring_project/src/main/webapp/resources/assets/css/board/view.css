@@ -8,13 +8,22 @@
 	margin-bottom: 50px;
  	/* background-color: yellow;  */
 }
+.replyText{
+	margin: auto;
+	width: 70%;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 20px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+ 	/* background-color: yellow;  */
+}
 .table_wrap{
 	width: 100%;
 	/* background-color: skyblue; */
 }
 .table{
 	margin: auto;
-	width: 60%;
+	width: 70%;
 	/* background-color: #d5f4e1; */
 	border-collapse: collapse;
 	
@@ -29,22 +38,48 @@ th:nth-child(2n), td:nth-child(2n) {
     background-color: #ffffff;
   }
 th:nth-child(2n+1), td:nth-child(2n+1) {
-    background-color: #e3f2fd;
+    background-color: #F3F3F3;
   }
+a{
+	text-decoration: none;
+} 
 .reply{
 	margin: auto;
-	width: 60%;
-	/* background-color: green; */
+	margin-bottom : 20px;
+	width: 70%;
+	
 }  
+li{
+    list-style: none;	
+}
+.reply_list{
+	list-style: none;
+	border-bottom: 1px solid #ececec;
+	padding-right: 20px;
+	
+}
+.replyer{
+	margin : 20px 0px 0px 20px;
+	border-color: #ffffff;
+	border : 1px solid #ececec;
+}
+.replytext_wrap{
+	margin:auto;
+	
+	height : 300px;
+}
 textarea {
-	margin-top:20px;
-    width: 90%;
-    height: 55px;
+	margin:20px;
+	padding : 16px;
+    width: 95%;
+    height: 100px;
+    border: 1px solid #ececec;
+    resize: none;
     /* border: 1px solid pink; */
 }
 div.button{
    margin: auto;
-   width: 168px;
+    width: 250px;
 }
 div.button input{
    padding: 5px;
@@ -61,17 +96,15 @@ div.button input{
     background: #476fad;
     border-radius: 0;
 }
-.regit{
-	margin-top: 20px;
+.register{
+	margin-right : 30px;
 	text-align: center;
     line-height: 26px;
     border: none 0;
-    color: #fff;
     width: 80px;
     font-size: 15px;
-    background: #476fad;
-    border-radius: 0;
 	margin-bottom: 70px;
+	float : right;
 }
 .btn:hover{
 	background: #476fad;

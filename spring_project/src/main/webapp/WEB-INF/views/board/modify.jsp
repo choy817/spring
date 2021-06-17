@@ -53,6 +53,20 @@
                         </li> -->
                     </ul>
                 </div>
+                <c:choose>
+	   				 <c:when test="${sessionScope.user ne null}">
+						<div class="session">
+							<p>${sessionScope.user}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+							</p>
+		 				</div>
+	    			</c:when>
+	   				<c:otherwise>
+	          			<div class="login">
+	               			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+	          			</div>
+	     			</c:otherwise>
+				</c:choose>
             </div>
         </div>
     </nav>

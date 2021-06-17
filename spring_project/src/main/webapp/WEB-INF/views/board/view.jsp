@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
+<%@ page session="true" %>  
 <!DOCTYPE html>
 <html><head>
     <title>게시글 보기</title>
@@ -54,10 +55,20 @@
                         </li> -->
                     </ul>
                 </div>
-                <div class="menuSearch">
-                	<input type="text" id="searchQuery1" placeholder="홈페이지내 검색" title="검색어 입력창" onkeydown="javascript:if(event.keyCode == 13) totalSearch();" autocomplete="off">
-                	<button type="button" class="btn_search" onclick="totalSearch();">검색</button>
-                </div>
+				<c:choose>
+   				 <c:when test="${sessionScope.user ne null}">
+					<div class="session">
+						<p>${sessionScope.user}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+						</p>
+	 				</div>
+    			</c:when>
+    			<c:otherwise>
+		          <div class="login">
+		               <p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+		          </div>
+     			</c:otherwise>
+			</c:choose>
             </div>
         </div>
     </nav>
@@ -71,50 +82,65 @@
 				<input type="hidden" name="amount" value="${cri.amount}">
 				<input type="hidden" name="keyword" value="${cri.keyword}">
 				<input type="hidden" name="type" value="${cri.type}">
-			 <table class="table">
-		        <colgroup>
-		            <col width="15%">
-		            <col width="35%">
-		            <col width="15%">
-		            <col width="*">
-		        </colgroup>
-		        <tbody>
-		            <tr class="">
-		                <th scope="col">No</th>
-		                <td>${board.bno}</td>
-		                <th scope="col">조회수</th>
-		                <td>${board.views}</td>
-		            </tr>
-		            <tr class="">
-		                <th>작성자</th>
-		                <td>${board.writer }</td>
-		                <th>작성시간</th>
-		                <td>${board.regdate }</td>
-		            </tr>
-		            <tr class="">
-		                <th scope="col">제목</th>
-		                <td colspan="3">${board.title}</td>
-		            </tr>
-		            <tr class="">
-		                <th>내용</th>
-		                <td colspan="3" style="height: 400px; text-align: left;">${board.content }</td>
-		            </tr>
-		            <tr class="">
-		                <th scope="col">파일 첨부</th>
-		                <td colspan="3"><a href="javascript:void(0);" onclick="javascript:fileDown('${file.fileNo}'); return false">${file.realName}</a></td>
-		            </tr>
-		        </tbody>
-		    </table>
-		    <div class="reply">
-	    	<textarea placeholder="댓글을 입력하세요"></textarea>
-	    	<button type="button" class="btn btn-info regit">등록</button>
-	    	</div>
-	    <div class="button">
-		    <input type="button" class="btn btn-info" onclick="location.href='/board/modify${cri.getListLink()}&bno=${board.bno}'" value="수정">
-		    <input type="submit" id="submitBtn" class="btn btn-info" value="삭제">
-		    <input type="button" class="btn btn-secondary" value="목록" onclick="location.href='/board/list${cri.getListLink()}'">
-		</div>
-			</form> 
+				 <table class="table">
+			        <colgroup>
+			            <col width="15%">
+			            <col width="35%">
+			            <col width="15%">
+			            <col width="*">
+			        </colgroup>
+			        <tbody>
+			            <tr class="">
+			                <th scope="col">No</th>
+			                <td>${board.bno}</td>
+			                <th scope="col">조회수</th>
+			                <td>${board.views}</td>
+			            </tr>
+			            <tr class="">
+			                <th>작성자</th>
+			                <td>${board.writer }</td>
+			                <th>작성시간</th>
+			                <td>${board.regdate }</td>
+			            </tr>
+			            <tr class="">
+			                <th scope="col">제목</th>
+			                <td colspan="3">${board.title}</td>
+			            </tr>
+			            <tr class="">
+			                <th>내용</th>
+			                <td colspan="3" style="height: 400px; text-align: left;">${board.content }</td>
+			            </tr>
+			            <tr class="">
+			                <th scope="col">파일 첨부</th>
+			                <td colspan="3"><a href="javascript:void(0);" onclick="javascript:fileDown('${file.fileNo}'); return false">${file.realName}</a></td>
+			            </tr>
+			        </tbody>
+			    </table>
+			    <div class="replyText"><p>댓글</p></div>
+			    <div class="reply">
+			    	<ul class="replies">
+					</ul>
+					<div class="regit_wrap">
+						<%-- <input type="text" class="replyer" name="replyer" value="${sessionScope.user}" readonly> --%>
+						<div class="replytext_wrap">
+						<input type="text" class="replyer" name="replyer">
+					    	<textarea name="reply-content" placeholder="댓글을 입력하세요"></textarea>
+					    	<a href="#" class="btn register">등록</a>
+				    	</div>
+				    	<div class="paging" style="text-align: center;font-size: 20px;"></div>
+			    	</div>
+		    	</div>
+			    <div class="button">
+	<%-- 		    	<c:choose>
+    					<c:when test="${sessionScope.user ne null}"> --%>
+						    <button type="button" class="btn btn-info" onclick="location.href='/board/modify${cri.getListLink()}&bno=${board.bno}'">수정</button>
+						    <button type="submit" id="submitBtn" class="btn btn-info">삭제</button>
+<%-- 				   	 	</c:when>
+				   	</c:choose>  --%>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/board/list${cri.getListLink()}'">목록</button>
+				</div>
+				
+			</form>   
 		</div>
 	<div>
 	   <form id="readForm">
@@ -155,6 +181,7 @@
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/board/reply.js"></script>
     <script type="text/javascript">
     	var readForm=$("#readForm");
     	var actionForm=$("#actionForm");
@@ -170,5 +197,127 @@
 	    	actionForm.append("<input type='hidden' name='bno' value='${board.bno}'>");
 	    	actionForm.submit();
     	});
+    </script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			var bnoValue="${board.bno}";
+			var replyUL = $(".replies");
+			var pageNum = 1;
+			var replyPaging=$(".paging");
+			
+			showList(pageNum);
+			//댓글 페이징 처리
+			function showReplyPage(replyCnt){
+				var str = "";
+				var endNum = Math.ceil(pageNum / 10.0) * 10;
+				var startNum = endNum-9;
+				var realEnd = Math.ceil(replyCnt / 10.0);
+				
+				var prev = startNum !=1;
+				var next = false;
+				
+				if(endNum > realEnd / 10.0){
+					endNum = realEnd;
+				}
+				if(endNum * 10 < replyCnt){
+					next = true;
+				}
+				if(prev){
+					str+="<a class='changePage' href='"+(startNum-1) +"'><code>&lt;</code></a>";
+				}
+				for(let i = startNum; i <=endNum; i++){
+					if(pageNum == i){
+						str+="<code>" + i + "</code>";
+						continue;
+					}
+					str += "<a class='changePage' href='"+i+"'><code>"+ i + "</code></a>";
+				}
+				if(next){
+					str+="<a class='changePage' href='"+(endNum+1) +"'><code>&gt;</code></a>";
+				}
+				replyPaging.html(str);
+			}
+			//페이지 이동
+			$(".paging").on("click","a.changePage",function(e){
+	    		e.preventDefault();
+				pageNum = parseInt($(this).attr("href"));
+				//페이지 이동 후 목록 보여주기
+				showList(pageNum);
+			});
+			//댓글 목록 보여주기
+			function showList(page){
+				replyService.getList({bno : bnoValue, page : page || 1},
+				function(replyCnt,list){
+					console.log("list : "+list.length);
+					//댓글 목록이 없을 경우
+					if(list ==null || list.length ==0){
+						replyUL.html("댓글이 없습니다! 댓글을 남겨주세요");
+						return;
+					}
+					
+					var str="";
+					//댓글 목록이 있을 경우
+					for(let i=0, len=list.length || 0; i<len;i++){
+						str +="<li class='reply_list' style = 'disply:block'data-rno='"+ list[i].rno +"'>";
+						str +="<p><strong>"+list[i].replyer+"</strong></p>";
+						str +="<p class='reply"+list[i].rno+"'>"+list[i].reply+"</p>";
+						str +="<div style='text-align:right;'>"+replyService.displayTime(list[i].replydate);
+						str +="<br><a href='"+list[i].rno+"'class='modify'>수정</a>";
+						str +="<a href='"+list[i].rno+"' class='finish' style='display:none;'>수정 완료</a>";
+						str +="&nbsp;&nbsp;&nbsp;&nbsp;<a href='"+list[i].rno+"'class='remove'>삭제</a></div>";
+						str +="<div class='reply'</div></li>";
+					}
+					replyUL.html(str);
+					showReplyPage(replyCnt);
+					//댓글 삭제	
+					$(".replies").on("click","a.remove",function(e){
+						e.preventDefault();
+						var rnoValue=$(this).attr("href");
+						replyService.deleteReply(rnoValue,function(result){
+							alert(result);
+							//삭제 후 댓글 목록 보여주기
+							showList(pageNum);
+						})
+					});
+					//댓글 수정
+					$(".replies").on("click","a.modify",function(e){
+						e.preventDefault();
+						var rnoValue=$(this).attr("href");
+						var replyTag=$(".reply"+rnoValue);
+						
+						replyTag.html("<textarea class='"+rnoValue+"'>"+replyTag.text()+"</textarea>")
+						$(this).hide();
+						
+						var finishs=$(".finish");
+						for(let i=0; i<finishs.length;i++){
+							if($(finishs[i]).attr("href")==rnoValue){
+								$(finishs[i]).show();
+								break;
+							}
+						}
+					});
+					$(".replies").on("click","a.finish",function(e){
+						e.preventDefault();
+						var rnoValue=$(this).attr("href");
+						
+						replyService.modify({rno:rnoValue,reply:$("."+rnoValue).val()},
+								function(result){
+									alert(result);
+									showList(pageNum);
+						});
+					})
+				});
+			}
+			//댓글 등록
+			$(".register").on("click",function(e){
+	    		e.preventDefault();
+	    		var reply = $("textarea[name='reply-content']").val();
+	    		var replyer=$("input[name='replyer']").val();
+	    		replyService.add({reply : reply, replyer : replyer, bno : bnoValue},function(result){
+	    			console.log(result);
+	    			showList(pageNum);
+	    		});
+	    	});
+		});
     </script>
 </html>
