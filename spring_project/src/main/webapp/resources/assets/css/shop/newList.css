@@ -11,7 +11,7 @@
 	margin-top: 20px;
  	/* background-color: yellow;  */
 }
-
+.row{border-bottom: 1px solid #ebebeb;}
 .search-results{width: 60%;margin: auto;/* background-color: pink  */}
 .search-results .row{position:relative;padding:15px 0;overflow:hidden;/* background-color: coral; */width: 90%;margin-left:20px; }
 .search-results .row .thumb{float:left;font-size:0;line-height:0;width:118px;margin-right:20px}

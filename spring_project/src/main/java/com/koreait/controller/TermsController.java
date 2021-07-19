@@ -8,12 +8,16 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/product/*")
-public class ProductController {
-	@GetMapping("/newList")
-	public void newList() {
+@RequestMapping("/terms/*")
+public class TermsController {
+	
+	@GetMapping("/mailRefusal")
+	public void mailRefusal() {
+		log.info("mailRefusal : Controller");
 	}
-	@GetMapping("/prodDesc")
-	public void prodDesc() {
+	@GetMapping("/personInfo")
+	public void personInfo() {
+		log.info("personInfo : Controller");
 	}
+
 }

@@ -113,8 +113,8 @@
             </div> -->
             <div class="footerTopBox">
                 <ul class="pvLink">
-                    <li><a href="/member/persionlInfoView.do">개인정보처리방침</a></li>
-                    <li><a href="/member/mailrefusalView.do">이메일수집거부</a></li>
+                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
+                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
                 </ul>
             </div>
             <div class="footerBottomBox">

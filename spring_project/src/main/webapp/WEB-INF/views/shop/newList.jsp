@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html><head>
-    <title>회원가입 완료</title>
+    <title>신간 목록</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -17,8 +18,8 @@
     <!-- Load Tempalte CSS -->
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/custom.css">
-    <link rel="stylesheet" href="/assets/css/user/joinOk.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min2.css">
+    <link rel="stylesheet" href="/assets/css/shop/newList.css">
 </head>
 
 <body>
@@ -53,56 +54,94 @@
                         </li> -->
                     </ul>
                 </div>
-                <div class="menuSearch">
-                	<input type="text" id="searchQuery1" placeholder="홈페이지내 검색" title="검색어 입력창" onkeydown="javascript:if(event.keyCode == 13) totalSearch();" autocomplete="off">
-                	<button type="button" class="btn_search" onclick="totalSearch();">검색</button>
-                </div>
+                <c:choose>
+                	<c:when test="${sessionScope.user ne null}">
+	                	<div class="session">
+							<p>${sessionScope.user}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+							</p>
+	               		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="login">
+                			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>
     <!-- Close Header -->
     <%--본문 시작 --%>
-    <div class="bodyBox01">
-    		<h2 class="boardText">회원가입</h2>
-			<div class="bodyBox12 subBoxTxt">
-				<p>이메일 인증이 완료되었습니다.</p>
+    <div class="boardText"><p>신간소개</p></div>
+    <form action="" id="listForm">
+    <div class="prod_wrap">
+    	<div id="search-results" class="search-results wide">
+    			<c:forEach var="i" items="${newList }">
+				<div class="row">
+					<div class="thumb">
+						<a class="goDetail" href="${i.pno}">
+						<img src="${i.imgURL }" alt="">
+						</a>
+					</div>
+					<div class="box">
+						<div class="item">
+							<div class="bif">
+								<a class="name goDetail" href="${i.pno }">${i.prodTitle }</a>
+								<p>${i.author }</p>
+								<p>${i.company }</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				</c:forEach>																									
+			</div>	
 		</div>
-		<div class="button">
-	        <button type="button" class="btn btn-info">로그인</button>
-	    </div>
-	</div>
-    <%--본문 끝 --%>
+	</form>
+ 	<%--본문 끝 --%>
+	
     <!-- Start Footer -->
-  <footer>
-	<div class="footerContents">
-        <div class="inner">
-<!--             <div class="chatBot">
-                <a href="#" id="floating_box" title="새창열림"><img src="/resource/images/img_chatbot.png" alt="챗봇"></a>
-            </div> -->
-            <div class="footerTopBox">
-                <ul class="pvLink">
-                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
-                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
-                </ul>
-            </div>
-            <div class="footerBottomBox">
-                <p class="copyright">
-		                    국회도서관 - 서울특별시 영등포구 의사당대로 1 (여의도동) (우07233)<br>
-		                    홈페이지 관련 문의 : webw3@nanet.go.kr  /  전화문의 : 02-6788-4211, 080-788-4211(수신자 부담)<br>
-		           Copyright ⓒ 대한민국 국회도서관 All rights reserved.
-                </p>
-            </div>
-        </div>
-    </div>
+    <footer>
+		<div class="footerContents">
+	        <div class="inner">
+	<!--             <div class="chatBot">
+	                <a href="#" id="floating_box" title="새창열림"><img src="/resource/images/img_chatbot.png" alt="챗봇"></a>
+	            </div> -->
+	            <div class="footerTopBox">
+	                <ul class="pvLink">
+	                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
+	                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
+	                </ul>
+	            </div>
+	            <div class="footerBottomBox">
+	                <p class="copyright">
+			                    국회도서관 - 서울특별시 영등포구 의사당대로 1 (여의도동) (우07233)<br>
+			                    홈페이지 관련 문의 : webw3@nanet.go.kr  /  전화문의 : 02-6788-4211, 080-788-4211(수신자 부담)<br>
+			           Copyright ⓒ 대한민국 국회도서관 All rights reserved.
+	                </p>
+	            </div>
+	        </div>
+	    </div>
    </footer> 
     <!-- End Footer -->
 </body>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
-    <script src="/assets/js/user/joinOk.js"></script>
-    <script> var contextPath = "${pageContext.request.contextPath}";</script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript">
+    	var listForm=$("#listForm");
+    	
+    	$(".goDetail").on("click", function(e){
+    		e.preventDefault();
+    		
+    		listForm.append("<input type='hidden' name='pno' value='"+$(this).attr("href")+"'>");
+    		listForm.attr("action","/shop/prodDesc");
+    		listForm.submit();
+    	});
+    </script>
 </html>

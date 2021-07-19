@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
+<mapper namespace="com.koreait.mapper.ShopMapper">
+	<!-- 크롤링 결과 DB저장 -->
+	<insert id="insertProd" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="pno">
+		<selectKey resultType="int" keyProperty="pno" order="BEFORE">
+			SELECT MAX(pno)+1 FROM tbl_prod
+		</selectKey>
+		INSERT INTO tbl_prod(pno, imgURL, prodTitle, author, company) VALUES 
+		<foreach collection="list" item="prod" separator="," index="index">
+			(#{pno},#{prod.imgURL}, #{prod.prodTitle}, #{prod.author},#{prod.company})
+		</foreach>	
+		ON DUPLICATE KEY 
+		UPDATE imgURL=values(imgURL), prodTitle=values(prodTitle), author=values(author), company=values(company)
+	</insert>
+	<!-- 도서 상세보기 -->
+	<select id="prodDesc" resultType="com.koreait.domain.ShopDTO">
+		SELECT * FROM tbl_prod WHERE PNO=#{pno}
+	</select>
+	<!-- 리스트 불러오기 -->
+	<select id="newList" resultType="com.koreait.domain.ShopDTO">
+		SELECT * FROM tbl_prod WHERE PNO > 0 ORDER BY PNO DESC
+	</select>
+</mapper>

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min2.css">
-    <link rel="stylesheet" href="/assets/css/product/prodDesc.css">
+    <link rel="stylesheet" href="/assets/css/shop/prodDesc.css">
 </head>
 
 <body>
@@ -67,15 +67,12 @@
    <div class="box detail-book">
 		<div class="left">
 			<div>
-				<span id="divCoverImage"><img src="//img.libbook.co.kr/V2/BookImgK14/9791128861383.jpg" width="100%" height="100%" alt="책표지"></span>	                	
-				<script type="text/javascript">callDetailECIP('divCoverImage','divDetailInfo','9791128861383');</script>
-			  	<div id="divDetailInfo"><a href="http://ecip.libbook.co.kr/DetailView_new_utf.php?pUniv=seoulreplib&amp;pUser=&amp;isbn=9791128861383" target="_blank" title="새창" class="btn-detail">상세보기</a><a href="http://ecip.libbook.co.kr/api/ImgPreview.do?pUniv=seoulreplib&amp;pUser=&amp;isbn=9791128861383" target="_blank" title="새창" class="btn-prev">미리보기</a></div>
+				<span id="divCoverImage"><img src="${desc.imgURL }" width="100%" height="100%" alt="책표지"></span>	                	
 			</div>
 		</div>
 		<div class="right">
 			<div class="profileHeader">
-			    <h3>민족학과 인류학 사전 .3</h3>
-			    <p>피에르 봉트</p>
+			    <h3>${desc.prodTitle }</h3>
 			</div>
 			<div class="profileContent">
 				<div class="table">
@@ -83,23 +80,10 @@
 			        	<table>
 			        		<tbody>
 								<tr>
-									<th scope="row">자료유형</th>
-									<td>단행본</td>
+									<td>${desc.author }</td>
 								</tr>
 								<tr>
-									<th scope="row">개인저자</th>
-									<td><a href="/search/tot/result?st=EXCT&amp;si=2&amp;q=BontePierre">Bonte Pierre</a><br>
-										<a href="/search/tot/result?st=EXCT&amp;si=2&amp;q=IzardMichel">Izard Michel</a><br>
-										<a href="/search/tot/result?st=EXCT&amp;si=2&amp;q=류정아">류정아</a><br>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">서명/저자사항</th>
-									<td>민족학과 인류학 사전.피에르 봉트 ,미셸 이자르 편저 ;류정아 옮김.</td>
-								</tr>
-								<tr>
-									<th scope="row">발행사항</th>
-									<td>서울:커뮤니케이션북스,2021, c2010</td>
+									<td>${desc.company }</td>
 								</tr>
 							</tbody>
 						</table>
@@ -117,9 +101,11 @@
 		</div>
 		<div class="searchContents">
 	        <div class="collect-txt">
-				<li>
-					제1장 드골의 경이로운 삶과 새로운 프랑스의 시작 &nbsp;<br>제2장 세상천지 모르는 게 없는 이상한 아이 &nbsp;<br>제3장 가장 아름다운 모헙의 시작과 세대를 뛰어넘는 인연 &nbsp;<br>제4장 이상할 정도로 흥미로운 젊은이와 그의 막강한 후원자들 &nbsp;<br>제5장 완전히 ‘평범하지’ 않은 결합 그리고 예상치 못한 기회 &nbsp;<br>제6장 냉정한 전문가, 정치의 최전선에 서다 &nbsp;<br>제7장 ‘꼬마 마크롱’, 은행을 떠나 더 큰 세상으로 나아가다 &nbsp;<br>제8장 정치 놀음의 희생양이 된 국가를 위한 일 &nbsp;<br>제9장 살기 위해 애쓰는 사람들 편에 선 새로운 정치 &nbsp;<br>제10장 비밀스러운 밤 모임의 마크롱과 ‘마크롱의 아이들’ &nbsp;<br>제11장 새로운 정치 운동, 앙 마르슈! 그 시작을 알리다 &nbsp;<br>제12장 대통령 출마 선언, 그러나 아직은 부족한 앙 마르슈 세력 &nbsp;<br>제13장 마크롱을 위한 근사한 선물, 정치계의 추문 &nbsp;<br>제14장 온갖 문젯거리를 한 방에 날린 숨겨둔 비장의 무기 &nbsp;<br>제15장 정치는 사라지고 추문만 남은 프랑스 대통령 선거 &nbsp;<br>제16장 어떤 결과가 나와도 이상하지 않을 예측 불허의 대접전 &nbsp;<br>제17장 모두가 불가능하다고 말했던 ‘천운을 타고난 영웅’의 탄생 &nbsp;<br>제18장 안팎으로 커지는 시련에도 전진하는 마크롱의 프랑스 &nbsp;<br>&nbsp;<br>감사의 말 &nbsp;<br>마크롱, 당선 그 이후의 이야기 &nbsp;<br>추천의 말 &nbsp;<br>옮긴이의 말
-				</li>
+	        	<ul>
+					<li>
+						제1장 드골의 경이로운 삶과 새로운 프랑스의 시작 &nbsp;<br>제2장 세상천지 모르는 게 없는 이상한 아이 &nbsp;<br>제3장 가장 아름다운 모헙의 시작과 세대를 뛰어넘는 인연 &nbsp;<br>제4장 이상할 정도로 흥미로운 젊은이와 그의 막강한 후원자들 &nbsp;<br>제5장 완전히 ‘평범하지’ 않은 결합 그리고 예상치 못한 기회 &nbsp;<br>제6장 냉정한 전문가, 정치의 최전선에 서다 &nbsp;<br>제7장 ‘꼬마 마크롱’, 은행을 떠나 더 큰 세상으로 나아가다 &nbsp;<br>제8장 정치 놀음의 희생양이 된 국가를 위한 일 &nbsp;<br>제9장 살기 위해 애쓰는 사람들 편에 선 새로운 정치 &nbsp;<br>제10장 비밀스러운 밤 모임의 마크롱과 ‘마크롱의 아이들’ &nbsp;<br>제11장 새로운 정치 운동, 앙 마르슈! 그 시작을 알리다 &nbsp;<br>제12장 대통령 출마 선언, 그러나 아직은 부족한 앙 마르슈 세력 &nbsp;<br>제13장 마크롱을 위한 근사한 선물, 정치계의 추문 &nbsp;<br>제14장 온갖 문젯거리를 한 방에 날린 숨겨둔 비장의 무기 &nbsp;<br>제15장 정치는 사라지고 추문만 남은 프랑스 대통령 선거 &nbsp;<br>제16장 어떤 결과가 나와도 이상하지 않을 예측 불허의 대접전 &nbsp;<br>제17장 모두가 불가능하다고 말했던 ‘천운을 타고난 영웅’의 탄생 &nbsp;<br>제18장 안팎으로 커지는 시련에도 전진하는 마크롱의 프랑스 &nbsp;<br>&nbsp;<br>감사의 말 &nbsp;<br>마크롱, 당선 그 이후의 이야기 &nbsp;<br>추천의 말 &nbsp;<br>옮긴이의 말
+					</li>
+				</ul>
 	        </div>
 	    </div> 
 	</div>
@@ -136,8 +122,8 @@
 	            </div> -->
 	            <div class="footerTopBox">
 	                <ul class="pvLink">
-	                    <li><a href="/member/persionlInfoView.do">개인정보처리방침</a></li>
-	                    <li><a href="/member/mailrefusalView.do">이메일수집거부</a></li>
+	                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
+	                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
 	                </ul>
 	            </div>
 	            <div class="footerBottomBox">
