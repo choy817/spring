@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.koreait.domain.UserDTO;
@@ -19,22 +20,21 @@ import lombok.extern.log4j.Log4j;
 @Service@Log4j
 public class UserServiceImpl implements UserService{
 	@Setter(onMethod_=@Autowired)
-	UserMapper mapper;
+	UserMapper userMapper;
 	@Setter(onMethod_=@Autowired)
 	JavaMailSender mailSender;
 	
 	//회원가입 및 이메일인증
 	@Override
 	public boolean userJoin(UserDTO user) {
-		log.info("userjoin : Service 진입");
 		//회원insert
-		boolean joinResult=mapper.userJoin(user);
+		boolean joinResult=userMapper.userJoin(user);
 		if(joinResult) {
 			log.info("joinOk : Service 진입");
 			//인증키 생성
 			String key = new TempKey().getKey(50, false);
 			//인증키 DB저장
-			mapper.joinOk(user.getUserEmail(), key);
+			userMapper.joinOk(user.getUserEmail(), key);
 			try {
 				MailHandler sendMail = new MailHandler(mailSender);
 				sendMail.setSubject("[이메일 인증]");
@@ -62,22 +62,31 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void userAuth(String userEmail) {
 		log.info(userEmail);
-		mapper.userAuth(userEmail);
+		userMapper.userAuth(userEmail);
 	}
 
 	//로그인
 	@Override
 	public UserDTO login(UserDTO user) {
-		log.info("login : Service 진입");
-		return mapper.login(user);
+		return userMapper.selectUser(user);
 	}
+	//인증상태 확인
 	@Override
 	public int checkCert(UserDTO user) {
-		return mapper.checkCert(user);
+		return userMapper.checkCert(user);
 	}
-	
+	//아이디 중복체크
 	@Override
 	public int checkId(String userId) {
-		return mapper.checkId(userId);
+		return userMapper.checkId(userId);
+	}
+	//회원정보 수정
+	@Override
+	public void userModify(UserDTO user) {
+		//비밀번호가 변경되었을 경우
+		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+		String enPw=encoder.encode(user.getUserPw());
+		user.setUserPw(enPw);
+		userMapper.userModify(user);
 	}
 }

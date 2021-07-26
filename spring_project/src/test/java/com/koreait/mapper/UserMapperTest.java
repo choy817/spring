@@ -54,7 +54,7 @@ public class UserMapperTest {
 		UserDTO user=new UserDTO();
 		user.setUserId("banana");
 		user.setUserPw("abcd1234");
-		mapper.login(user);
+		mapper.selectUser(user);
 	}
 //	@Test
 	public void authTest() throws Exception{

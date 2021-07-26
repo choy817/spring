@@ -58,7 +58,6 @@ public class UserController {
 		}
 		return "/user/joinForm"; 
 	}
-	
 	@ResponseBody
 	@RequestMapping(value="/checkId", method=RequestMethod.POST, produces="application/json")
 	public Map<Object, Object> checkId(@RequestBody String userId){
@@ -91,12 +90,12 @@ public class UserController {
 			// 암호화되지 않은 비밀번호(raw-)와 암호화된 비밀번호(encoded-)가 일치하는지 비교
 			 boolean pwMatch=pwdEncoder.matches(user.getUserPw(), login.getUserPw());
 			 if(login != null && pwMatch ==true) {
-				 log.info("정보 일치");
-//				 session.setAttribute("user",login.getUserName());
-				 session.setAttribute("user",user);
-				 return "redirect:/product/newList";
+				log.info("정보 일치");
+				session.setAttribute("user",login);
+				log.info("Session User : "+login);
+				 return "redirect:/shop/newList";
 			 }else {
-				 log.info("정보 불일치");
+				log.info("정보 불일치");
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg",false);
 			}
@@ -108,4 +107,20 @@ public class UserController {
 		session.removeAttribute("user");
 		return "redirect:/product/newList";
 	}
+	@GetMapping
+	public void userModify(String userId, Model model) {
+		log.info("Controller : userModify ------> Get");
+	}
+	
+	@PostMapping("/userModify")
+	public String userModify(UserDTO user, HttpSession session) {
+		log.info("Controller : userModify ------> Post");
+		userService.userModify(user);
+		//설정된 세션을 모두 제거
+		session.invalidate();
+		return "redirect:/user/modifyOk";
+	}
+	
+	@GetMapping("/modifyOk")
+	public void modifyOk() {}
 }

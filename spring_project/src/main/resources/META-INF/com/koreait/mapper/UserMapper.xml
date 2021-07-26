@@ -20,18 +20,28 @@
 	<select id="checkId" resultType="int">
 		SELECT COUNT(*) FROM tbl_user WHERE userId=#{userId}
 	</select>	
-	<!-- 로그인 -->
-	<select id="login" resultType="com.koreait.domain.UserDTO">
+	<!-- 로그인, 회원정보 조회 -->
+	<select id="selectUser" resultType="com.koreait.domain.UserDTO">
 		SELECT * FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} -->
 	</select>
 	<!-- 이메일 인증 확인 -->
 	<select id="checkCert" resultType="_int">
 		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId} AND userCertification=1
 	</select>
+	<select id="selectUser2" resultType="com.koreait.domain.UserDTO">
+		SELECT * FROM tbl_user WHERE userId=#{userId}
+	</select>
 	
 	<!-- 이메일 인증 완료 시 -->
 	<update id="userAuth">
 	 <![CDATA[UPDATE tbl_user SET userCertification = 1 WHERE (SELECT COUNT(*) FROM userAuth WHERE userEmail = #{userEmail}) > 0]]>
+	</update>
+	<!-- 회원정보 수정  -->
+	<update id="userModify">
+		UPDATE tbl_user 
+		SET userPw=#{userPw}, userPwCheck=#{userPwCheck}, userEmail=#{userEmail}, userPhone=#{userPhone}, 
+		userPostcode=#{userPostcode}, userAddr=#{userAddr}, userDetailAddr=#{userDetailAddr} ,userEtcAddr=#{userEtcAddr}
+		WHERE userId = #{userId}
 	</update>
 	
 </mapper>

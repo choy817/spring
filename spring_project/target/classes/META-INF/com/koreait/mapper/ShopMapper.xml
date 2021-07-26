@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
 <mapper namespace="com.koreait.mapper.ShopMapper">
+	<sql id="criteria">
+		<!-- 검색어가 있을 경우 실행 -->
+		<if test="keyword!=null and type!=null">
+			<trim prefix="(" suffix=") a AND" prefixOverrides="OR">
+								<!-- collection : 전달받은 인자. List or Array 형태만 가능하다 -->
+				<foreach item="type" collection="typeArr">
+					<choose>
+						<when test="type=='T'.toString()">
+							OR (TITLE LIKE '%' || #{keyword} || '%') 
+						</when>
+						<when test="type=='C'.toString()">
+							OR (CONTENT LIKE '%' || #{keyword} || '%') 
+						</when>
+						<when test="type=='W'.toString()">
+							OR (WRITER LIKE '%' || #{keyword} || '%') 
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
 	<!-- 크롤링 결과 DB저장 -->
 	<insert id="insertProd" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="pno">
 		<selectKey resultType="int" keyProperty="pno" order="BEFORE">
@@ -14,6 +35,7 @@
 		ON DUPLICATE KEY 
 		UPDATE imgURL=values(imgURL), prodTitle=values(prodTitle), author=values(author), company=values(company)
 	</insert>
+	
 	<!-- 도서 상세보기 -->
 	<select id="prodDesc" resultType="com.koreait.domain.ShopDTO">
 		SELECT * FROM tbl_prod WHERE PNO=#{pno}
@@ -21,5 +43,20 @@
 	<!-- 리스트 불러오기 -->
 	<select id="newList" resultType="com.koreait.domain.ShopDTO">
 		SELECT * FROM tbl_prod WHERE PNO > 0 ORDER BY PNO DESC
+	</select>
+	<!-- 검색 기준이 포함된 리스트 -->
+	<select id="getListWithPaging" resultType="com.koreait.domain.ShopDTO">
+		SELECT *
+		FROM  
+		(SELECT @rnum := @rnum + 1 AS rownum,tbl_prod.* FROM (SELECT @rnum := 0) r, tbl_prod ORDER BY pno DESC) result
+         WHERE
+         <include refid="criteria"></include>
+		rownum BETWEEN (1 + ( #{pageNum} - 1 ) * #{amount}) AND ( #{pageNum} * #{amount} )
+	</select>
+	<!-- 총 갯수 -->
+	<select id="getTotal" resultType="_int">
+		SELECT COUNT(*) FROM tbl_prod WHERE
+		<include refid="criteria"/>
+		PNO>0
 	</select>
 </mapper>

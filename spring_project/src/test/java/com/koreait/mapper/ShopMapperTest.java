@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
 
 import lombok.Setter;
@@ -20,9 +21,19 @@ public class ShopMapperTest {
 	@Setter(onMethod_=@Autowired)
 	ShopMapper shopMapper;
 	
-	@Test
+//	@Test
 	public void newListTest() {
 		ShopDTO shop=new ShopDTO();
 		shopMapper.newList();
+	}
+//	@Test
+	public void getTotlaTest() {
+		Criteria cri=new Criteria();
+		shopMapper.getTotal(cri);
+	}
+	@Test
+	public void getListTest() {
+		Criteria cri=new Criteria();
+		shopMapper.getListWithPaging(cri);
 	}
 }

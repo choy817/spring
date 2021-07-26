@@ -13,6 +13,8 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.domain.BoardDTO;
+import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
 import com.koreait.mapper.ShopMapper;
 
@@ -26,9 +28,14 @@ public class ShopServiceImpl implements ShopService{
 	ShopMapper shopMapper;
 	
 	private static String libList = "https://www.anseong.go.kr/library/search/newSearch.do?mId=0101050000";
-
+	//도서 리스트
 	@PostConstruct
-	public List<ShopDTO> getNewList() throws IOException {
+	public List<ShopDTO> getNewList(){
+		return shopMapper.newList();
+	}
+	//검색기준 적용된 도서 리스트
+	@Override
+	public List<BoardDTO> getList(Criteria cri) throws IOException{
 		List<ShopDTO> newList=new ArrayList<ShopDTO>();
 		
         Document doc;
@@ -55,11 +62,17 @@ public class ShopServiceImpl implements ShopService{
 				newList.add(shop);
 				shopMapper.insertProd(newList);
 			}
-		return shopMapper.newList();
-  }
-
+		return shopMapper.getListWithPaging(cri);
+	}
+	//도서 상세보기
 	@Override
 	public ShopDTO prodDesc(Long pno) {
 		return shopMapper.prodDesc(pno);	
 	}
+	//총 갯수
+	@Override
+	public int getTotal(Criteria cri) {
+		return shopMapper.getTotal(cri);
+	}
+	
 }

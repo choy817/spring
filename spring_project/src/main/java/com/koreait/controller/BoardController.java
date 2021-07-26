@@ -65,6 +65,7 @@ public class BoardController {
 	public void view(@RequestParam("bno") Long bno,@ModelAttribute("cri") Criteria cri,Model model) {
 		log.info("view : Controller");
 		model.addAttribute("board",boardService.view(bno));
+		//조회수 증가
 		boardService.viewsCnt(bno);
 		model.addAttribute("file", boardService.selectFile(bno));
 	}

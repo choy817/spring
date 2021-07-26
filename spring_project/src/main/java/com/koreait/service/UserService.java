@@ -13,5 +13,7 @@ public interface UserService {
 	public void userAuth(String userEmail);
 	//인증상태 확인
 	public int checkCert(UserDTO user);
+	//회원정보 수정
+	public void userModify(UserDTO user);
 	
 }

@@ -57,7 +57,7 @@
                 <c:choose>
                 	<c:when test="${sessionScope.user ne null}">
 	                	<div class="session">
-							<p>${sessionScope.user}님 환영합니다
+							<p>${sessionScope.user.userName}님 환영합니다
 							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
 							</p>
 	               		</div>
@@ -98,6 +98,46 @@
 			</div>	
 		</div>
 	</form>
+	<div class="paging">
+		  <ul class="pagination">
+			<c:if test="${pageMaker.prev}">
+			    <li class="page-item">
+				    <a class="page-link" href="${pageMaker.startPage-1}">&laquo;</a>
+			    </li>
+			</c:if>
+		    <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
+		    	<c:choose>
+		    		<%--현재페이지 --%>
+		    		<c:when test="${pageMaker.cri.pageNum == num }">
+		    			<li class="page-link active">${num}</li>	
+		    		</c:when>
+		    		<c:otherwise>
+		    			<li class="page-item">
+		      				<a class="page-link" href="${num}">${num}</a>
+		    			</li>
+		    		</c:otherwise>
+		    	</c:choose>
+		    </c:forEach>
+		    <c:if test="${pageMaker.next }">
+			    <li class="page-item">
+			      <a class="page-link" href="${pageMaker.endPage+1 }">&raquo;</a>
+			    </li>
+		    </c:if>
+		  </ul>
+		  <form id="actionForm" action="/shop/newList" method="get">
+		    	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		    	<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		    	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		   </form>
+		   <%-- 다른 페이지로 이동한 후 다시 목록 돌아올 때 이전 페이지 번호를 기억 --%>
+		   <form action="" id="pageForm">
+		   		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		   		<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		    	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		   </form>
+	</div>
  	<%--본문 끝 --%>
 	
     <!-- Start Footer -->
@@ -135,6 +175,13 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
     	var listForm=$("#listForm");
+    	var actionForm=$("#actionForm");
+    	
+    	$(".page-link").on("click",function(e){
+    		e.preventDefault();
+    		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+    		actionForm.submit();
+    	});
     	
     	$(".goDetail").on("click", function(e){
     		e.preventDefault();
