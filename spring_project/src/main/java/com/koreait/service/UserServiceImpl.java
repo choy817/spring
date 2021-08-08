@@ -89,4 +89,10 @@ public class UserServiceImpl implements UserService{
 		user.setUserPw(enPw);
 		userMapper.userModify(user);
 	}
+	//회원 탈퇴
+	@Override
+	public int userDelete(UserDTO user) {
+		return userMapper.userDelete(user);
+	}
 }
+

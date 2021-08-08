@@ -39,26 +39,23 @@
                 <div class="flex-fill mx-xl-5 mb-2">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="index.html">신간소개</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="/shop/newList">신간소개</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="about.html">베스트셀러</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="work.html">커뮤니티</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="/board/list">커뮤니티</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">마이페이지</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="/user/userInfo">마이페이지</a>
                         </li>
- <!--                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="contact.html">Contact</a>
-                        </li> -->
                     </ul>
                 </div>
 				<c:choose>
    				 <c:when test="${sessionScope.user ne null}">
 					<div class="session">
-						<p>${sessionScope.user}님 환영합니다
+						<p>${sessionScope.user.userName}님 환영합니다
 							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
 						</p>
 	 				</div>
@@ -117,13 +114,15 @@
 			        </tbody>
 			    </table>
 			    <div class="replyText"><p>댓글</p></div>
+			    
+			    
+			    
 			    <div class="reply">
 			    	<ul class="replies">
 					</ul>
 					<div class="regit_wrap">
-						<%-- <input type="text" class="replyer" name="replyer" value="${sessionScope.user}" readonly> --%>
 						<div class="replytext_wrap">
-						<input type="text" class="replyer" name="replyer">
+							<input type="text" class="replyer" name="replyer" value="${sessionScope.user.userName}" readonly>
 					    	<textarea name="reply-content" placeholder="댓글을 입력하세요"></textarea>
 					    	<a href="#" class="btn register">등록</a>
 				    	</div>
@@ -131,12 +130,12 @@
 			    	</div>
 		    	</div>
 			    <div class="button">
-	<%-- 		    	<c:choose>
-    					<c:when test="${sessionScope.user ne null}"> --%>
+			    	<c:choose>
+    					<c:when test="${board.writer eq sessionScope.user.userName}">
 						    <button type="button" class="btn btn-info" onclick="location.href='/board/modify${cri.getListLink()}&bno=${board.bno}'">수정</button>
 						    <button type="submit" id="submitBtn" class="btn btn-info">삭제</button>
-<%-- 				   	 	</c:when>
-				   	</c:choose>  --%>
+ 				   	 	</c:when>
+				   	</c:choose>  
 				    <button type="button" class="btn btn-secondary" onclick="location.href='/board/list${cri.getListLink()}'">목록</button>
 				</div>
 				
@@ -198,6 +197,7 @@
 	    	actionForm.submit();
     	});
     </script>
+    <!-- el, jstl있음 -->
     <script type="text/javascript">
 		$(document).ready(function(){
 			var bnoValue="${board.bno}";
@@ -256,16 +256,24 @@
 					}
 					
 					var str="";
+					var test="";
+					var session="${sessionScope.user.userName}";
+					
+					//console.log("지금 세션 : "+session);
+					
 					//댓글 목록이 있을 경우
 					for(let i=0, len=list.length || 0; i<len;i++){
-						str +="<li class='reply_list' style = 'disply:block'data-rno='"+ list[i].rno +"'>";
+ 						str +="<li class='reply_list' style = 'disply:block'data-rno='"+ list[i].rno +"'>";
 						str +="<p><strong>"+list[i].replyer+"</strong></p>";
 						str +="<p class='reply"+list[i].rno+"'>"+list[i].reply+"</p>";
 						str +="<div style='text-align:right;'>"+replyService.displayTime(list[i].replydate);
-						str +="<br><a href='"+list[i].rno+"'class='modify'>수정</a>";
-						str +="<a href='"+list[i].rno+"' class='finish' style='display:none;'>수정 완료</a>";
-						str +="&nbsp;&nbsp;&nbsp;&nbsp;<a href='"+list[i].rno+"'class='remove'>삭제</a></div>";
-						str +="<div class='reply'</div></li>";
+						
+						if(list[i].replyer==session){
+							str +="<br><a href='"+list[i].rno+"'class='modify'>수정</a>";
+							str +="<a href='"+list[i].rno+"' class='finish' style='display:none;'>수정 완료</a>";
+							str +="&nbsp;&nbsp;&nbsp;&nbsp;<a href='"+list[i].rno+"'class='remove'>삭제</a></div>";
+						}
+						str +="<div class='reply'></div></li>"; 
 					}
 					replyUL.html(str);
 					showReplyPage(replyCnt);

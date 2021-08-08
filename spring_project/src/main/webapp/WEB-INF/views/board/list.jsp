@@ -47,11 +47,8 @@
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="/board/list">커뮤니티</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">마이페이지</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="/user/userInfo">마이페이지</a>
                         </li>
- <!--                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="contact.html">Contact</a>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -191,11 +188,11 @@
     	var searchForm =$("#searchForm");
     	var actionForm=$("#actionForm");
     	
-    	$("searchForm a").on('click',function(e){
+    	$("#searchForm a").on('click',function(e){
     		//기본속성을 막아줌
     		e.preventDefault();
     		
-    		if(!serchFrom.find("option:selected").val()){
+    		if(!searchForm.find("option:selected").val()){
     			alert("검색 기준을 선택하세요");
     			return false;
     		}

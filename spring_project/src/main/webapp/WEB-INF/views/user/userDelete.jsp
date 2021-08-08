@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html><head>
-    <title>회원정보 수정</title>
+    <title>회원탈퇴</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -19,7 +18,7 @@
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css">
-    <link rel="stylesheet" href="/assets/css/user/userModify.css">
+    <link rel="stylesheet" href="/assets/css/user/joinForm.css">
 </head>
 
 <body>
@@ -51,20 +50,6 @@
                         </li>
                     </ul>
                 </div>
-                <c:choose>
-                	<c:when test="${sessionScope.user ne null}">
-	                	<div class="session">
-							<p>${sessionScope.user.userId}님 환영합니다
-							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
-							</p>
-	               		</div>
-                	</c:when>
-                	<c:otherwise>
-                		<div class="login">
-                			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
-                		</div>
-                	</c:otherwise>
-                </c:choose>
             </div>
         </div>
     </nav>
@@ -73,10 +58,9 @@
 	<div class="wrap wd668">
       <div class="container">
         <div class="form_txtInput">
-          <h2 class="sub_tit_txt">회원정보 수정</h2>
-          <!-- <p class="exTxt">회원가입시 이메일 인증을 반드시 진행하셔야 합니다.</p> -->
-      	<form class="modifyForm" name="modifyForm" method="post" action="/user/userModify">
-          <div class="modify_form">
+          <h2 class="sub_tit_txt">회원탈퇴</h2>
+      	<form class="deleteForm" name="deleteForm" method="post" action="/user/userDelete">
+          <div class="join_form">
             <table>
               <colgroup>
                 <col width="30%">
@@ -85,55 +69,22 @@
               <tbody>
                 <tr>
                   <th><span>아이디</span></th>
-                  <td><input type="text" name="userId" placeholder="아이디를 입력하세요" value="${user.userId}" readonly></td>
-                </tr>
-                <tr>
-                  <th><span>이름</span></th>
-                  <td><input type="text" name="userName" placeholder="이름을 입력하세요" value="${user.userName}" readonly></td>
+                  <td><input type="text" name="userId" placeholder="ID 를 입력하세요." value="${user.userId }" readonly>
+                  <span id="checkId"></span>
+                  </td>
                 </tr>
                 <tr>
                   <th><span>비밀번호</span></th>
-                  <td><input type="password" name="userPw" placeholder="비밀번호를 입력하세요" value="${user.userPw }">
+                  <td><input type="password" name="userPw" placeholder="비밀번호를 입력하세요">
                   <span id="checkPw"></span>
                   </td>
                 </tr>
-                <tr>
-                  <th><span>비밀번호 확인</span></th>
-                  <td><input type="password" name="userPwConfirm" placeholder="비밀번호를 확인하세요">
-                  <span id="checkpwConfirm"></span>
-                  </td>
-                </tr>
-                <tr class="email">
-                  <th><span>이메일</span></th>
-                  <td>
-                    <input type="text" name="userEmail" placeholder="예) gildong@email.com" value="${user.userEmail }">
-                    <span id="checkEmail"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <th><span>휴대폰 번호</span></th>
-                  <td><input type="text" name="userPhone" placeholder="'-'없이 번호만 입력해 주세요" value="${user.userPhone }">
-                  <span id="checkPhone"></span>
-                  </td>
-                </tr>
-                <tr class="address">
-                  <th><span>주소</span></th>
-                  <td>
-					<input type="text" name="userPostcode" id="sample6_postcode" placeholder="우편번호" readonly value="${user.userPostcode }">
-					<input type="button" class="postcode_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-					<input type="text" name="userAddr" id="sample6_address" placeholder="주소" value="${user.userAddr }"><br>
-					<input type="text" name="userDetailAddr" id="sample6_detailAddress" placeholder="상세주소" value="${user.userDetailAddr }">
-					<input type="text" name="userEtcAddr" id="sample6_extraAddress" placeholder="참고항목" value="${user.userEtcAddr }">
-					<span id="checkAddr"></span>
-				  </td>
-                </tr>
               </tbody>
             </table>
-            <div class="exform_txt"><span>표시는 필수적으로 입력해주셔야 수정이 가능합니다.</span></div>
           </div><!-- join_form E  -->
         </form>
           <div class="btn_wrap">
-            <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="수정">
+            <input type="button" class="btn btn-info" onclick="javascript:sendIt();" value="탈퇴">
           </div>
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->
@@ -143,6 +94,9 @@
   <footer>
 	<div class="footerContents">
         <div class="inner">
+<!--             <div class="chatBot">
+                <a href="#" id="floating_box" title="새창열림"><img src="/resource/images/img_chatbot.png" alt="챗봇"></a>
+            </div> -->
             <div class="footerTopBox">
                 <ul class="pvLink">
                     <li><a href="/terms/personInfo">개인정보처리방침</a></li>
@@ -169,6 +123,55 @@
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
 <script> var contextPath = "${pageContext.request.contextPath}";</script>
-<script src="/assets/js/user/userModify.js"></script>
+<script src="/assets/js/user/userDelete.js"></script>
 </html>

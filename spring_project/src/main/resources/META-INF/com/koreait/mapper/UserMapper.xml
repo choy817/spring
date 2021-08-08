@@ -22,7 +22,7 @@
 	</select>	
 	<!-- 로그인, 회원정보 조회 -->
 	<select id="selectUser" resultType="com.koreait.domain.UserDTO">
-		SELECT * FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} -->
+		SELECT * FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} : pw는 controller에서 비교-->
 	</select>
 	<!-- 이메일 인증 확인 -->
 	<select id="checkCert" resultType="_int">
@@ -31,6 +31,13 @@
 	<select id="selectUser2" resultType="com.koreait.domain.UserDTO">
 		SELECT * FROM tbl_user WHERE userId=#{userId}
 	</select>
+	<!-- 내가 쓴 글 보기 -->
+<!-- 	<select id="userWrote" resultType="">
+		select * from tbl_board
+            where parent = ANY ( select parent from tbl_board where writer = #{writer} order by num asc )
+            order by num asc
+            limit 0, 10 
+	</select> -->
 	
 	<!-- 이메일 인증 완료 시 -->
 	<update id="userAuth">
@@ -43,5 +50,10 @@
 		userPostcode=#{userPostcode}, userAddr=#{userAddr}, userDetailAddr=#{userDetailAddr} ,userEtcAddr=#{userEtcAddr}
 		WHERE userId = #{userId}
 	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="userDelete">
+		DELETE FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} : pw는 controller에서 비교-->
+	</delete>
 	
 </mapper>

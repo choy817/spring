@@ -25,11 +25,13 @@ public class BoardMapperTest {
 	public void getListTest() {
 		boardMapper.getList();
 	}
-//	@Test
+	@Test
 	public void getListWithPaging() {
 		Criteria cri=new Criteria();
 		cri.setAmount(10);
 		cri.setPageNum(1);
+		cri.setType("W");
+		cri.setKeyword("김사과");
 		boardMapper.getListWithPaging(cri).forEach(board->{
 			log.info("board: "+board);
 		});
@@ -70,7 +72,7 @@ public class BoardMapperTest {
 		long bno=147L;
 		boardMapper.viewsCnt(bno);
 	}
-	@Test
+//	@Test
 	public void boardModifyTest() {
 		BoardDTO board=new BoardDTO();
 		board.setBno(147L);

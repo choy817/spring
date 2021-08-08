@@ -30,7 +30,7 @@ public class UserMapperTest {
 		user.setUserName("반하나");
 		user.setUserPw("abcd1234");
 		user.setUserPwCheck("abcd1234");
-		user.setUserEmail("cyjspringtest@gamil.com");
+		user.setUserEmail("apple@gamil.com");
 		user.setUserPhone("01000000000");
 		user.setUserPostcode("01234");
 		user.setUserAddr("테스트시 테스트구");
@@ -41,7 +41,7 @@ public class UserMapperTest {
 		log.info(user);
 		
 	}
-	@Test
+//	@Test
 	public void checkIdTest() throws Exception{
 		UserDTO user=new UserDTO();
 		user.setUserId("apple");
@@ -68,6 +68,12 @@ public class UserMapperTest {
 		UserDTO user=new UserDTO();
 		user.setUserId("apple");
 		mapper.checkCert(user);
-		
+	}
+	@Test
+	public void deleteTest() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserId("apple");
+		user.setUserPw("Apple1234!");
+		mapper.userDelete(user);
 	}
 }

@@ -1,13 +1,12 @@
 package com.koreait.controller;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +27,6 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
-
 public class UserController {
 	@Setter(onMethod_=@Autowired)
 	UserService userService;
@@ -123,4 +121,44 @@ public class UserController {
 	
 	@GetMapping("/modifyOk")
 	public void modifyOk() {}
+	
+	@GetMapping("/userDelete")
+	public void userDelete() {
+		log.info("Controller : userDelete ------> Get");
+	}
+	
+	@PostMapping("/userDelete")
+	public String userDelete(UserDTO user, HttpSession session, RedirectAttributes rttr) {
+		log.info("Controller : userDelete ------> Post");
+		//세션 값 가져오기
+		UserDTO userInfo=(UserDTO) session.getAttribute("user");
+		//세션에 저장되어있는 패스워드
+		String sessionPass=userInfo.getUserPw();
+		//회원 탈퇴 시 새로 입력한 패스워드
+		String uPass=user.getUserPw();
+		
+		//패스워드 서로 비교
+		boolean result = pwdEncoder.matches(uPass, sessionPass);
+		log.info("result : "+result);
+		
+		//패스워드 일치
+		if(result) {
+			userService.userDelete(user);
+			SecurityContextHolder.clearContext();
+			return "redirect:/user/deleteOk";
+		//패스워드 불일치	
+		}else {
+			rttr.addFlashAttribute("false", "회원탈퇴 실패");
+			return "redirect:/user/userDelete";
+		}
+	}
+	@GetMapping("/deleteOk")
+	public void deleteOk() {
+		log.info("Controller : DeleteOk");
+	}
+	@GetMapping("/userInfo")
+	public void userInfo() {
+		log.info("Controller : userInfo");
+		
+	}
 }

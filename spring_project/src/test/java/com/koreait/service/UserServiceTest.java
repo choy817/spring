@@ -24,11 +24,11 @@ public class UserServiceTest {
 		// given : 주어진 것들로
 		UserDTO user=new UserDTO();
 		user.setUserNo(9);
-		user.setUserId("apple");
-		user.setUserName("김사과");
+		user.setUserId("banana");
+		user.setUserName("반하나");
 		user.setUserPw("abcd1234");
 		user.setUserPwCheck("abcd1234");
-		user.setUserEmail("apple@apple.com2");
+		user.setUserEmail("cyjspringtest@gamil.com");
 		user.setSendNumber("1234");
 		user.setUserPhone("01000000000");
 		user.setUserPostcode("01234");
@@ -67,5 +67,12 @@ public class UserServiceTest {
 		UserDTO user=new UserDTO();
 		user.setUserId("apple");
 		userService.checkCert(user);
+	}
+	@Test
+	public void deleteTest() {
+		UserDTO user=new UserDTO();
+		user.setUserId("banana");
+		user.setUserPw("abcd1234");
+		userService.userDelete(user);
 	}
 }
