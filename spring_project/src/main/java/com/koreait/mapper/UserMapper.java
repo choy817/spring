@@ -21,7 +21,8 @@ public interface UserMapper {
 	public void userModify(UserDTO user);
 	//회원 탈퇴
 	public int userDelete(UserDTO user);
-	//내가 쓴 글 보기
-	//public void userWrote(String userId);
-	
+	//아이디 찾기
+	public UserDTO findId(UserDTO user);
+	//비밀번호 변경
+	public boolean changePw(UserDTO user);
 }

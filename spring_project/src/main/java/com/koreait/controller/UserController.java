@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.koreait.domain.UserDTO;
 import com.koreait.service.UserService;
 
@@ -105,8 +106,8 @@ public class UserController {
 		session.removeAttribute("user");
 		return "redirect:/product/newList";
 	}
-	@GetMapping
-	public void userModify(String userId, Model model) {
+	@GetMapping("/userModify")
+	public void userModify() {
 		log.info("Controller : userModify ------> Get");
 	}
 	
@@ -159,6 +160,30 @@ public class UserController {
 	@GetMapping("/userInfo")
 	public void userInfo() {
 		log.info("Controller : userInfo");
+	}
+	@GetMapping("/findId")
+	public void findId() {
+		log.info("Controller : findUser -------->Get");
+	}
 		
+	@PostMapping("/findId")
+	public void findId(UserDTO user, Model model) {
+		log.info("Controller : findUser -------->Post--------->"+user);
+		model.addAttribute("findId", userService.findId(user));
+	}
+	
+	@GetMapping("/changePw")
+	public void changePw() {
+		log.info("Controller : changePw -------->Get");
+	}
+	@PostMapping("/changePw")
+	public String changePw(UserDTO user) {
+		log.info("Controller : findUser -------->Post--------->"+user);
+		userService.changePw(user);
+		return "/user/changePwOk";
+	}
+	@GetMapping("/changePwOk")
+	public void changePwOk() {
+		log.info("Controller : changePwOk");
 	}
 }

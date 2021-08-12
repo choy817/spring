@@ -69,11 +69,26 @@ public class UserMapperTest {
 		user.setUserId("apple");
 		mapper.checkCert(user);
 	}
-	@Test
+//	@Test
 	public void deleteTest() throws Exception{
 		UserDTO user=new UserDTO();
 		user.setUserId("apple");
 		user.setUserPw("Apple1234!");
 		mapper.userDelete(user);
+	}
+//	@Test
+	public void findIdTest() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserName("김사과");
+		user.setUserEmail("cyjspringtest@gmail.com");
+		mapper.findId(user);
+	}
+	@Test
+	public void changePwTest() throws Exception{
+		UserDTO user=new UserDTO();
+		user.setUserId("apple");
+		user.setUserName("김사과");
+		user.setUserEmail("cyjspringtest@gmail.com");
+		mapper.changePw(user);
 	}
 }

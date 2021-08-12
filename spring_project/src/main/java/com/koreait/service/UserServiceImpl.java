@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 	@Setter(onMethod_=@Autowired)
 	JavaMailSender mailSender;
+	@Setter(onMethod_=@Autowired)
+	BCryptPasswordEncoder pwdEncoder;
 	
 	//회원가입 및 이메일인증
 	@Override
@@ -84,8 +86,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void userModify(UserDTO user) {
 		//비밀번호가 변경되었을 경우
-		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-		String enPw=encoder.encode(user.getUserPw());
+		String enPw=pwdEncoder.encode(user.getUserPw());
 		user.setUserPw(enPw);
 		userMapper.userModify(user);
 	}
@@ -93,6 +94,36 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int userDelete(UserDTO user) {
 		return userMapper.userDelete(user);
+	}
+	//아이디 찾기
+	@Override
+	public UserDTO findId(UserDTO user) {
+		return userMapper.findId(user);
+	}
+	//비밀번호 변경
+	@Override
+	public void changePw(UserDTO user) {
+		String key = new TempKey().getKey(6, false);
+		log.info(key);
+		try {
+			MailHandler sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[임시 비밀번호 발급]");
+			sendMail.setText(new StringBuffer().append("<h1>임시 비밀번호가 발급되었습니다.</h1>")
+					.append("<p>임시 비밀번호로 로그인 하신 후 새로운 비밀번호로 변경해주시기 바랍니다.</p>")
+					.append("임시 비밀번호는 "+key+"입니다.")
+					.toString());
+			sendMail.setFrom("cyjspringtest@gmail.com", "관리자");
+			sendMail.setTo(user.getUserEmail());
+			sendMail.send();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		String enPw=pwdEncoder.encode(key);
+		user.setUserPw(enPw);
+		userMapper.changePw(user);
 	}
 }
 

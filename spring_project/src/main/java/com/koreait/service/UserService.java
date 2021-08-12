@@ -17,5 +17,9 @@ public interface UserService {
 	public void userModify(UserDTO user);
 	//회원 탈퇴
 	public int userDelete(UserDTO user);
+	//아이디 찾기
+	public UserDTO findId(UserDTO user);
+	//비밀번호 찾기
+	public void changePw(UserDTO user);
 	
 }

@@ -28,16 +28,10 @@
 	<select id="checkCert" resultType="_int">
 		SELECT COUNT(*) FROM tbl_user WHERE USERID=#{userId} AND userCertification=1
 	</select>
-	<select id="selectUser2" resultType="com.koreait.domain.UserDTO">
-		SELECT * FROM tbl_user WHERE userId=#{userId}
-	</select>
-	<!-- 내가 쓴 글 보기 -->
-<!-- 	<select id="userWrote" resultType="">
-		select * from tbl_board
-            where parent = ANY ( select parent from tbl_board where writer = #{writer} order by num asc )
-            order by num asc
-            limit 0, 10 
-	</select> -->
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="com.koreait.domain.UserDTO">
+		SELECT * from tbl_user where userName=#{userName} and userEmail=#{userEmail}
+	</select>	
 	
 	<!-- 이메일 인증 완료 시 -->
 	<update id="userAuth">
@@ -50,7 +44,10 @@
 		userPostcode=#{userPostcode}, userAddr=#{userAddr}, userDetailAddr=#{userDetailAddr} ,userEtcAddr=#{userEtcAddr}
 		WHERE userId = #{userId}
 	</update>
-	
+	<!-- 비밀번호 변경 -->
+	<update id="changePw">
+		UPDATE tbl_user SET userPw=#{userPw} WHERE userId=#{userId} AND userEmail=#{userEmail} AND userName=#{userName}
+	</update>
 	<!-- 회원 탈퇴 -->
 	<delete id="userDelete">
 		DELETE FROM tbl_user WHERE USERID=#{userId} <!-- AND USERPW=#{userPw} : pw는 controller에서 비교-->
