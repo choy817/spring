@@ -59,4 +59,12 @@
 		<include refid="criteria"/>
 		PNO>0
 	</select>
+	<!-- 베스트셀러 목록 불러오기 -->
+	<select id="bestList" resultType="com.koreait.domain.BestSellerDTO">
+		SELECT * FROM tbl_best WHERE BESTNO > 0 ORDER BY BESTNO DESC
+	</select>
+	<!-- 베스트셀러 상세보기 -->
+	<select id="bestDesc" resultType="com.koreait.domain.BestSellerDTO">
+		SELECT * FROM tbl_best WHERE BESTNO=#{bestNo}
+	</select>
 </mapper>

@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.domain.BestSellerDTO;
 import com.koreait.domain.BoardDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
@@ -35,7 +36,7 @@ public class ShopServiceImpl implements ShopService{
 	}
 	//검색기준 적용된 도서 리스트
 	@Override
-	public List<BoardDTO> getList(Criteria cri) throws IOException{
+	public List<ShopDTO> getList(Criteria cri) throws IOException{
 		List<ShopDTO> newList=new ArrayList<ShopDTO>();
 		
         Document doc;
@@ -74,5 +75,14 @@ public class ShopServiceImpl implements ShopService{
 	public int getTotal(Criteria cri) {
 		return shopMapper.getTotal(cri);
 	}
-	
+	//베스트셀러 리스트
+	@Override
+	public List<BestSellerDTO> bestList() {
+		return shopMapper.bestList();
+	}
+	//베스트셀러 상세보기
+	@Override
+	public BestSellerDTO bestDesc(Long bestNo) {
+		return shopMapper.bestDesc(bestNo);
+	}
 }

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html><head>
-    <title>게시글 작성</title>
+    <title>베스트셀러</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -17,7 +18,8 @@
     <!-- Load Tempalte CSS -->
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/board/write.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min2.css">
+    <link rel="stylesheet" href="/assets/css/shop/newList.css">
 </head>
 
 <body>
@@ -49,41 +51,94 @@
                         </li>
                     </ul>
                 </div>
+                <c:choose>
+                	<c:when test="${sessionScope.user ne null}">
+	                	<div class="session">
+							<p>${sessionScope.user.userName}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+							</p>
+	               		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="login">
+                			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>
     <!-- Close Header -->
-    
-    <div class="write_wrap">
- 		<div class="writeText"><p>자유게시판</p></div>
- 			<div class="form_wrap">
-	    	    <form action="/board/write" method="post" class="write" enctype="multipart/form-data">
-	       			<div class="form-group">
-	              		<label for="title">제목</label>
-	           			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 작성해주세요.">
-	          		</div>
-	        		<div class="form-group">
-	            		<label for="writer">작성자</label>
-	            		<input type="text" class="form-control" id="writer" name="writer" placeholder="이름을 적어주세요." value="${sessionScope.user.userName }">
-	          		</div>
-	          		<div class="form-group">
-	            		<label for="content">내용</label>
-	            		<textarea class="form-control" id="content" name="content" rows="10"></textarea>
-	          		</div>
-	          		<div class="form-group">
-	            		<label for="attach">파일 첨부</label>
-	            		<input type="file" class="form-control" id="attach" name="attach">
-	          		</div>
-	          		<div class="button">
-		        		<button type="submit" class="btn btn-info">등록</button>
-		        		<button type="button" class="btn btn-secondary" onclick="location.href='/board/list${cri.getListLink()}'">목록</button>
-	        		</div>
-	    		</form>
-    		</div>
-    </div>
+    <%--본문 시작 --%>
+    <div class="boardText"><p>베스트셀러</p></div>
+    <form action="" id="listForm">
+    <div class="prod_wrap">
+    	<div id="search-results" class="search-results wide">
+    			<c:forEach var="best" items="${bestList }">
+				<div class="row">
+					<div class="thumb">
+						<a class="goDetail" href="${best.bestNo}">
+						<img src="${best.bestImage }" alt="">
+						</a>
+					</div>
+					<div class="box">
+						<div class="item">
+							<div class="bif">
+								<a class="name goDetail" href="${best.bestNo }">${best.bestTitle }</a>
+								<p>${best.bestAuthor }</p>
+								<p>${best.bestCompany }</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				</c:forEach>																									
+			</div>	
+		</div>
+	</form>
+	<div class="paging">
+		  <ul class="pagination">
+			<c:if test="${pageMaker.prev}">
+			    <li class="page-item">
+				    <a class="page-link" href="${pageMaker.startPage-1}">&laquo;</a>
+			    </li>
+			</c:if>
+		    <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
+		    	<c:choose>
+		    		<%--현재페이지 --%>
+		    		<c:when test="${pageMaker.cri.pageNum == num }">
+		    			<li class="page-link active">${num}</li>	
+		    		</c:when>
+		    		<c:otherwise>
+		    			<li class="page-item">
+		      				<a class="page-link" href="${num}">${num}</a>
+		    			</li>
+		    		</c:otherwise>
+		    	</c:choose>
+		    </c:forEach>
+		    <c:if test="${pageMaker.next }">
+			    <li class="page-item">
+			      <a class="page-link" href="${pageMaker.endPage+1 }">&raquo;</a>
+			    </li>
+		    </c:if>
+		  </ul>
+		  <form id="actionForm" action="/shop/newList" method="get">
+		    	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		    	<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		    	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		   </form>
+		   <%-- 다른 페이지로 이동한 후 다시 목록 돌아올 때 이전 페이지 번호를 기억 --%>
+		   <form action="" id="pageForm">
+		   		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		   		<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		    	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+		   </form>
+	</div>
+ 	<%--본문 끝 --%>
 	
     <!-- Start Footer -->
-  	<footer>
+    <footer>
 		<div class="footerContents">
 	        <div class="inner">
 	<!--             <div class="chatBot">
@@ -106,11 +161,31 @@
 	    </div>
    </footer> 
     <!-- End Footer -->
+</body>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
-</body>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript">
+    	var listForm=$("#listForm");
+    	var actionForm=$("#actionForm");
+    	
+    	$(".page-link").on("click",function(e){
+    		e.preventDefault();
+    		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+    		actionForm.submit();
+    	});
+    	
+    	$(".goDetail").on("click", function(e){
+    		e.preventDefault();
+    		
+    		listForm.append("<input type='hidden' name='bestNo' value='"+$(this).attr("href")+"'>");
+    		listForm.attr("action","/shop/bestDesc");
+    		listForm.submit();
+    	});
+    </script>
 </html>

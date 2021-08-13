@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.koreait.domain.BestSellerDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.PageDTO;
 import com.koreait.service.ShopService;
@@ -38,5 +40,15 @@ public class ShopController {
 	@GetMapping("/order")
 	public void order() {
 		
+	}
+	@GetMapping("/bestList")
+	public void bestList(Criteria cri, Model model) {
+		log.info("bestList : Controller");
+		model.addAttribute("bestList", shopService.bestList());
+	}
+	@GetMapping("/bestDesc")
+	public void bestDesc(@RequestParam("bestNo")Long bestNo, Model model) {
+		log.info("bestDesc : Controller");
+		model.addAttribute("bestDesc", shopService.bestDesc(bestNo));
 	}
 }

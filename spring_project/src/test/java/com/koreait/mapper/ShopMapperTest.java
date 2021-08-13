@@ -23,7 +23,6 @@ public class ShopMapperTest {
 	
 //	@Test
 	public void newListTest() {
-		ShopDTO shop=new ShopDTO();
 		shopMapper.newList();
 	}
 //	@Test
@@ -31,9 +30,13 @@ public class ShopMapperTest {
 		Criteria cri=new Criteria();
 		shopMapper.getTotal(cri);
 	}
-	@Test
+//	@Test
 	public void getListTest() {
 		Criteria cri=new Criteria();
 		shopMapper.getListWithPaging(cri);
+	}
+	@Test
+	public void bestListTest() {
+		shopMapper.bestList();
 	}
 }

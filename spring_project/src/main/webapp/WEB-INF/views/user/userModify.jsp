@@ -41,7 +41,7 @@
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="/shop/newList">신간소개</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="about.html">베스트셀러</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="/shop/bestList">베스트셀러</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="/board/list">커뮤니티</a>

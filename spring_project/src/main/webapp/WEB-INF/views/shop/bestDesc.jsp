@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html><head>
-    <title>이메일 수집 거부</title>
+    <title>신간 목록</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -17,8 +17,8 @@
     <!-- Load Tempalte CSS -->
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/custom.css">
-    <link rel="stylesheet" href="/assets/css/terms/mailRefusal.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min2.css">
+    <link rel="stylesheet" href="/assets/css/shop/prodDesc.css">
 </head>
 
 <body>
@@ -48,9 +48,6 @@
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="/user/userInfo">마이페이지</a>
                         </li>
- <!--                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="contact.html">Contact</a>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -58,58 +55,86 @@
     </nav>
     <!-- Close Header -->
     <%--본문 시작 --%>
-    <div class="wrap">
-    	<div class="boardText"><p>이메일 수집 거부</p></div>
-		<div class="box_wrap">
-			<div class="bg05">
-		    	<div class="e_leftBox">
-					<img src="/assets/img/bg05.png" alt="">
-				</div>
-			     <div class="e_rightBox">
-					<div class="e_rightBox_ml30">
-						<p class="txtInfo001">“본 웹사이트는 회원님의 <span class="blueTxt01">이메일주소를 보호</span>합니다”</p>
-						<p class="txtInfo002">
-							본 웹사이트에 공개되어 있는 이메일 주소의 무단수집을 거부하며,
-							자동으로 이메일 주소를 수집하는 프로그램이나 그 밖의 기술적 장치를 이용하여 이메일 주소를 수집할 경우
-							<span class="txtred">정보통신망이용촉진 및 정보보호 등에 관한 법률 제50조제2항과 제76조제1항에 따라 3천만원 이하의 벌금</span>에 처해질 수 있습니다
-						</p>
-					</div>
-				</div>
+   <div class="prod_wrap"> 
+   <div class="writeText"><p>상세정보</p></div>
+   <div class="box detail-book">
+		<div class="left">
+			<div>
+				<span id="divCoverImage"><img src="${bestDesc.bestImage }" width="100%" height="100%" alt="책표지"></span>	                	
 			</div>
 		</div>
-    </div>
-    <%--본문 끝 --%>
+		<div class="right">
+			<div class="profileHeader">
+			    <h3>${bestDesc.bestTitle }</h3>
+			</div>
+			<div class="profileContent">
+				<div class="table">
+					<div id="divProfile">
+			        	<table>
+			        		<tbody>
+								<tr>
+									<td>${bestDesc.bestAuthor }</td>
+								</tr>
+								<tr>
+									<td>${bestDesc.bestCompany }</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+		</div>
+		<div class="button">
+		    <button type="button" class="btn btn-info">장바구니</button>
+		    <button type="button" class="btn btn-secondary">바로구매</button>
+		</div>
+	</div>
+	<div class="box collect-info-box searchInfo">
+		<div class="searchHeader collect-info">
+			<h3 class="plus on">도서정보</h3>
+		</div>
+		<div class="searchContents">
+	        <div class="collect-txt">
+	        	<ul>
+					<li>${bestDesc.bestDetail }</li>
+				</ul>
+	        </div>
+	    </div> 
+	</div>
+</div>
+</div>
+ 	<%--본문 끝 --%>
+	
     <!-- Start Footer -->
-  <footer>
-	<div class="footerContents">
-        <div class="inner">
-<!--             <div class="chatBot">
-                <a href="#" id="floating_box" title="새창열림"><img src="/resource/images/img_chatbot.png" alt="챗봇"></a>
-            </div> -->
-            <div class="footerTopBox">
-                <ul class="pvLink">
-                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
-                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
-                </ul>
-            </div>
-            <div class="footerBottomBox">
-                <p class="copyright">
-		                    국회도서관 - 서울특별시 영등포구 의사당대로 1 (여의도동) (우07233)<br>
-		                    홈페이지 관련 문의 : webw3@nanet.go.kr  /  전화문의 : 02-6788-4211, 080-788-4211(수신자 부담)<br>
-		           Copyright ⓒ 대한민국 국회도서관 All rights reserved.
-                </p>
-            </div>
-        </div>
-    </div>
+    <footer>
+		<div class="footerContents">
+	        <div class="inner">
+	<!--             <div class="chatBot">
+	                <a href="#" id="floating_box" title="새창열림"><img src="/resource/images/img_chatbot.png" alt="챗봇"></a>
+	            </div> -->
+	            <div class="footerTopBox">
+	                <ul class="pvLink">
+	                    <li><a href="/terms/personInfo">개인정보처리방침</a></li>
+	                    <li><a href="/terms/mailRefusal">이메일수집거부</a></li>
+	                </ul>
+	            </div>
+	            <div class="footerBottomBox">
+	                <p class="copyright">
+			                    국회도서관 - 서울특별시 영등포구 의사당대로 1 (여의도동) (우07233)<br>
+			                    홈페이지 관련 문의 : webw3@nanet.go.kr  /  전화문의 : 02-6788-4211, 080-788-4211(수신자 부담)<br>
+			           Copyright ⓒ 대한민국 국회도서관 All rights reserved.
+	                </p>
+	            </div>
+	        </div>
+	    </div>
    </footer> 
     <!-- End Footer -->
-</body>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+
+
     <!-- Bootstrap -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Templatemo -->
     <script src="/assets/js/templatemo.js"></script>
     <!-- Custom -->
-    <script src="/assets/js/user/joinOk.js"></script>
-    <script> var contextPath = "${pageContext.request.contextPath}";</script>
+    <script src="/assets/js/custom.js"></script>
+</body>
 </html>
