@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.koreait.domain.BestSellerDTO;
 import com.koreait.domain.BoardDTO;
+import com.koreait.domain.CartDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
 
@@ -21,4 +22,5 @@ public interface ShopService {
 	public List<BestSellerDTO> bestList();
 	//베스트셀러 상세보기
 	public BestSellerDTO bestDesc(Long bestNo);
+	
 }

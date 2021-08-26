@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html><head>
-    <title>베스트셀러</title>
+    <title>장바구니 목록</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/assets/css/templatemo.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min2.css">
-    <link rel="stylesheet" href="/assets/css/shop/newList.css">
+    <link rel="stylesheet" href="/assets/css/cart/cartList.css">
 </head>
 
 <body>
@@ -70,31 +70,50 @@
     </nav>
     <!-- Close Header -->
     <%--본문 시작 --%>
-    <div class="boardText"><p>베스트셀러</p></div>
-    <form action="" id="listForm">
+    <div class="boardText"><p>장바구니 목록</p></div>
+    <form action="" id="listForm" method="post">
     <div class="prod_wrap">
+    	<c:if test="${sessionScope.user eq null }">
+    		<p>장바구니에 상품이 없습니다.</p>
+    	</c:if>
     	<div id="search-results" class="search-results wide">
-    			<c:forEach var="best" items="${bestList }">
-				<div class="row">
-					<div class="thumb">
-						<a class="goDetail" href="${best.bestNo}">
-						<img src="${best.imgURL }" alt="">
-						</a>
+    		<ul>
+				 <li>
+				  	<div class="allCheck">
+					  <input type="checkbox" name="allCheck" id="allCheck" /><label for="allCheck">모두 선택</label> 
 					</div>
-					<div class="box">
-						<div class="item">
-							<div class="bif">
-								<a class="name goDetail" href="${best.bestNo }">${best.prodTitle }</a>
-								<p>${best.author }</p>
-								<p>${best.company }</p>
+					<div class="delBtn">
+					   <button type="button" class="selectDelete_btn">선택 삭제</button> 
+					</div>
+				 </li>
+				 <li>
+	    			<c:forEach var="cart" items="${cartList }">
+						<div class="row">
+							<div class="thumb">
+								<div class="checkBox">								<!-- 커스텀 속성 -->
+								   <input type="checkbox" name="chBox" class="chBox" data-cartNum="${cart.cno}" />
+								</div>
+								<a class="goDetail" href="${cart.pno}">
+								<%-- <img src="${cart.imgURL }" alt=""> --%>
+								</a>
+							</div>
+							<div class="box">
+								<div class="item">
+									<div class="bif">
+										<a class="name goDetail" href="${cart.pno }">${cart.prodTitle }</a>
+									</div>
+									<div class="delete">
+								   	 	<a href="${cart.cno}" class="delete_btn" data-cartNum="${cart.cno}">삭제</a>
+								   	</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				</c:forEach>																									
-			</div>	
-		</div>
-	</form>
+					</c:forEach>	
+				</li>
+			</ul>																									
+		</div>	
+	</div>
+</form>
 	<div class="paging">
 		  <ul class="pagination">
 			<c:if test="${pageMaker.prev}">
@@ -170,6 +189,7 @@
     <!-- Custom -->
     <script src="/assets/js/custom.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script> var contextPath = "${pageContext.request.contextPath}";</script>
     <script type="text/javascript">
     	var listForm=$("#listForm");
     	var actionForm=$("#actionForm");
@@ -183,9 +203,70 @@
     	$(".goDetail").on("click", function(e){
     		e.preventDefault();
     		
-    		listForm.append("<input type='hidden' name='bestNo' value='"+$(this).attr("href")+"'>");
-    		listForm.attr("action","/shop/bestDesc");
+    		listForm.append("<input type='hidden' name='pno' value='"+$(this).attr("href")+"'>");
+    		listForm.attr("action","/shop/prodDesc");
     		listForm.submit();
     	});
+    	
+    	$(".delete_btn").on("click",function(e){
+			e.preventDefault();
+			
+			var confirm_val = confirm("정말 삭제하시겠습니까?");
+			  
+		  	if(confirm_val) {
+				console.log("${cart.cno}")
+				listForm.append("<input type='hidden' name='cno' value='"+$(this).attr("href")+"'>")
+				listForm.attr("action","/cart/deleteCart");
+				listForm.submit();
+			}
+		});
     </script>
+    <script>
+    	//전체선택
+		$("#allCheck").click(function(){
+		 var chk = $("#allCheck").prop("checked");
+		 
+		 if(chk) {
+		  $(".chBox").prop("checked", true);
+		 } else {
+		  $(".chBox").prop("checked", false);
+		 }
+		});
+    	//전체해제
+		$(".chBox").click(function(){
+		  $("#allCheck").prop("checked", false);
+		});
+	</script>
+	<script>
+		 $(".selectDelete_btn").click(function(){
+		  var confirm_val = confirm("정말 삭제하시겠습니까?");
+		  
+		  if(confirm_val) {
+		   var checkArr = new Array();
+		   
+		   $("input[class='chBox']:checked").each(function(){
+			//개별선택된 cno를 배열에 저장   
+		    checkArr.push($(this).attr("data-cartNum"));
+		   });
+		   
+		   console.log(checkArr);
+		    
+		   $.ajax({
+			    url : contextPath+"/cart/selectDeleteCart",
+			    type : "post",
+			    data : { chbox : checkArr },
+			    success : function(result){
+			    	if(result==1){
+				    	location.href = contextPath+"/cart/cartList";
+			    	}else{
+			    		alert("삭제 실패");
+			    	}
+			    },
+			    error:function(request,status,error){
+			        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    }
+		   });
+		  } 
+		 });
+	</script>
 </html>

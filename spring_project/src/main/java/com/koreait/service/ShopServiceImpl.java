@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.koreait.domain.BestSellerDTO;
 import com.koreait.domain.BoardDTO;
+import com.koreait.domain.CartDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
 import com.koreait.mapper.ShopMapper;
@@ -85,4 +86,5 @@ public class ShopServiceImpl implements ShopService{
 	public BestSellerDTO bestDesc(Long bestNo) {
 		return shopMapper.bestDesc(bestNo);
 	}
+	
 }

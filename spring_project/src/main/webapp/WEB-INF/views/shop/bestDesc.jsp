@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html><head>
     <title>신간 목록</title>
@@ -60,12 +61,12 @@
    <div class="box detail-book">
 		<div class="left">
 			<div>
-				<span id="divCoverImage"><img src="${bestDesc.bestImage }" width="100%" height="100%" alt="책표지"></span>	                	
+				<span id="divCoverImage"><img src="${bestDesc.imgURL }" width="100%" height="100%" alt="책표지"></span>	                	
 			</div>
 		</div>
 		<div class="right">
 			<div class="profileHeader">
-			    <h3>${bestDesc.bestTitle }</h3>
+			    <h3>${bestDesc.prodTitle }</h3>
 			</div>
 			<div class="profileContent">
 				<div class="table">
@@ -73,20 +74,27 @@
 			        	<table>
 			        		<tbody>
 								<tr>
-									<td>${bestDesc.bestAuthor }</td>
+									<td>${bestDesc.author }</td>
 								</tr>
 								<tr>
-									<td>${bestDesc.bestCompany }</td>
+									<td>${bestDesc.company }</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 		</div>
-		<div class="button">
-		    <button type="button" class="btn btn-info">장바구니</button>
-		    <button type="button" class="btn btn-secondary">바로구매</button>
-		</div>
+		<c:if test="${not empty sessionScope.user.userId }">
+			<form action="/cart/insertCart" method="post" name="cartForm">
+				<div class="button">
+					<input type="hidden" name="prodTitle" value="${bestDesc.prodTitle }">
+					<input type="hidden" name="imgURL" value="${bestDesc.imgURL }">
+					<input type="hidden" name="userId" id="userId" value="${user.userId}">
+				    <button class="btn btn-info">장바구니</button>
+				    <button class="btn btn-secondary">바로구매</button>
+				</div>
+			</form>
+		</c:if>
 	</div>
 	<div class="box collect-info-box searchInfo">
 		<div class="searchHeader collect-info">

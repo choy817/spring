@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스가 있는 경로를 적어서 BoardMapper 인터페이스와 연결한다. -->
+<mapper namespace="com.koreait.mapper.CartMapper">
+	<!-- 장바구니 갯수 -->
+	<select id="countCart" resultType="_int">
+		SELECT COUNT(*) FROM tbl_cart WHERE USERID=#{userId} AND PRODTITLE=#{prodTitle}
+	</select>
+	<!-- 장바구니 목록 -->
+	<select id="cartList" resultType="com.koreait.domain.CartDTO">
+		SELECT *
+		FROM  
+		(SELECT @rnum := @rnum + 1 AS rownum,tbl_cart.* FROM (SELECT @rnum := 0) r, tbl_cart ORDER BY cno DESC) result
+         WHERE userID=#{userId} AND rownum BETWEEN (1 + ( #{cri.pageNum} - 1 ) * #{cri.amount}) AND ( #{cri.pageNum} * #{cri.amount} )
+	</select>
+	<!-- 장바구니 전체 목록 갯수 -->
+	<select id="getTotal" resultType="_int">
+		SELECT COUNT(*) FROM tbl_cart WHERE CNO>0 AND userID=#{userId};
+	</select>
+	<!-- 장바구니 추가 -->
+	<insert id="insertCart">
+		INSERT INTO tbl_cart(prodTitle, userId, pno) VALUES (#{prodTitle}, #{userId}, #{pno})
+	</insert>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteCart">
+		DELETE FROM tbl_cart WHERE CNO=#{cno} AND USERID=#{userId}
+	</delete>
+</mapper>

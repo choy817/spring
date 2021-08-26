@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class BestSellerDTO {
-	long bestNo; 
-    String bestTitle; 
-    String bestAuthor; 
-    String bestCompany;
-    String bestImage; 
-    String bestDetail; 
+	private long bestNo; 
+    private String prodTitle; 
+    private String author; 
+    private String company;
+    private String imgURL; 
+    private String bestDetail; 
 }

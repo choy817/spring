@@ -3,6 +3,7 @@ package com.koreait.mapper;
 import java.util.List;
 
 import com.koreait.domain.BestSellerDTO;
+import com.koreait.domain.CartDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.ShopDTO;
 
@@ -21,4 +22,5 @@ public interface ShopMapper {
 	public List<BestSellerDTO> bestList();
 	//베스트셀러 상세보기
 	public BestSellerDTO bestDesc(Long bestNo);
+	
 }

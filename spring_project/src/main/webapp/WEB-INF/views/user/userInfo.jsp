@@ -59,6 +59,9 @@
    		<h2 class="boardText">내정보</h2>
 	   	<div id="myshopMain" class="xans-element- xans-myshop xans-myshop-main mid-0">
 	   		<div class="shopMain order">
+		        <h3 class="txtTitle16B"><a href="/cart/cartList">장바구니</a></h3>
+	    	</div>
+	   		<div class="shopMain order">
 		        <h3 class="txtTitle16B"><a href="/myshop/order/list.html">주문내역 조회</a></h3>
 	    	</div>
 			<div class="shopMain profile">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html><head>
     <title>신간 목록</title>
@@ -50,6 +51,20 @@
                         </li>
                     </ul>
                 </div>
+                <c:choose>
+                	<c:when test="${sessionScope.user ne null}">
+	                	<div class="session">
+							<p>${sessionScope.user.userName}님 환영합니다
+							<a href="${pageContext.request.contextPath}/user/logout">&nbsp;&nbsp;&nbsp;&nbsp;로그아웃</a>
+							</p>
+	               		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="login">
+                			<p><a href="${pageContext.request.contextPath}/user/login">로그인</a></p>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>
@@ -83,10 +98,17 @@
 					</div>
 				</div>
 		</div>
-		<div class="button">
-		    <button type="button" class="btn btn-info">장바구니</button>
-		    <button type="button" class="btn btn-secondary">바로구매</button>
-		</div>
+		<c:if test="${not empty sessionScope.user.userId }">
+			<form action="/cart/insertCart" method="post" name="cartForm">
+				<div class="button">
+					<input type="hidden" name="prodTitle" value="${desc.prodTitle}">
+					<input type="hidden" name="pno" value="${desc.pno}">
+					<input type="hidden" name="userId" id="userId" value="${user.userId}">
+			    	<button class="btn btn-info">장바구니</button>
+				    <button class="btn btn-secondary">바로구매</button>
+				</div>
+			</form>
+		</c:if>
 	</div>
 	<div class="box collect-info-box searchInfo">
 		<div class="searchHeader collect-info">

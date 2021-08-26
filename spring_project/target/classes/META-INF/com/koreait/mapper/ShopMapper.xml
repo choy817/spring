@@ -67,4 +67,6 @@
 	<select id="bestDesc" resultType="com.koreait.domain.BestSellerDTO">
 		SELECT * FROM tbl_best WHERE BESTNO=#{bestNo}
 	</select>
+
+	
 </mapper>

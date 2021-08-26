@@ -1,14 +1,18 @@
 package com.koreait.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.koreait.domain.BestSellerDTO;
+import com.koreait.domain.CartDTO;
 import com.koreait.domain.Criteria;
 import com.koreait.domain.PageDTO;
 import com.koreait.service.ShopService;
@@ -51,4 +55,5 @@ public class ShopController {
 		log.info("bestDesc : Controller");
 		model.addAttribute("bestDesc", shopService.bestDesc(bestNo));
 	}
+	
 }
